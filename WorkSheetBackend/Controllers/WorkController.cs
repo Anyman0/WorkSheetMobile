@@ -149,6 +149,35 @@ namespace WorkSheetBackend.Controllers
                     }
                     
                 }
+                // Assign chosen work to an employee
+                else if(model.Operation == "Assign")
+                {
+                    
+                    WorkAssignment assignment = (from wa in entities.WorkAssignments where (wa.Title == model.WorkTitle) && (wa.Active == true) && (wa.InProgress == true) select wa).FirstOrDefault();
+                    if (assignment == null)
+                    {
+                        return false;
+                    }
+                   
+                    int workId = assignment.Id_WorkAssignment;
+                    int customerId = assignment.Id_Customer.Value;                   
+
+                    assignment.InProgressAt = DateTime.Now;
+
+                    Timesheet newEntry = new Timesheet()
+                    {
+                        Id_Customer = customerId,
+                        Id_Employee = model.EmployeeId,
+                        Id_WorkAssignment = workId,
+                        StartTime = DateTime.Now,
+                        CreatedAt = DateTime.Now,
+                        Active = true,
+                        WorkComplete = false
+                    };
+
+                    entities.Timesheets.Add(newEntry);
+                                       
+                }
 
                 entities.SaveChanges();
             }

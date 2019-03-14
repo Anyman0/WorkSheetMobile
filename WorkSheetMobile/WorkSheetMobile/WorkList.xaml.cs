@@ -18,8 +18,27 @@ namespace WorkSheetMobile
 		public WorkList ()
 		{
 			InitializeComponent ();
+
+            // Disabling buttons until user chooses work from list
+            string chosenId = workList.SelectedItem?.ToString();
+            if (chosenId == null)
+            {
+                NewWorkButton.IsEnabled = false;
+                ModifyWorkButton.IsEnabled = false;
+                DeleteWorkButton.IsEnabled = false;
+            }
+            workList.ItemSelected += WorkList_ItemSelected;
 		}
 
+        // Enabling buttons
+        private void WorkList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            NewWorkButton.IsEnabled = true;
+            ModifyWorkButton.IsEnabled = true;
+            DeleteWorkButton.IsEnabled = true;
+        }
+
+        // Button Clicked-Actions
         private async void NewWorkButton_Clicked(object sender, EventArgs e)
         {
              await PopupNavigation.PushAsync(new NewWorkPopupView());           
@@ -37,6 +56,12 @@ namespace WorkSheetMobile
             await PopupNavigation.PushAsync(new DeleteWorkPopupView(WorkID));
         }
 
+        private async void AssignWorkButton_Clicked(object sender, EventArgs e)
+        {
+            string WorkID = workList.SelectedItem?.ToString();
+            await PopupNavigation.PushAsync(new AssignWorkPopupView(WorkID));
+        }
+
         protected override async void OnAppearing()
         {
             HttpClient client = new HttpClient();
@@ -46,5 +71,6 @@ namespace WorkSheetMobile
             workList.ItemsSource = workTitles;
             base.OnAppearing();
         }
+        
     }
 }

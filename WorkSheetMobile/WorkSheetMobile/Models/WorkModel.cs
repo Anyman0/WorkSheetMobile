@@ -13,6 +13,7 @@ namespace WorkSheetMobile.Models
         public DateTime Deadline { get; set; }
 
         // Employee fields
+        public int EmployeeId { get; set; }
         public string EmpOperation { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
