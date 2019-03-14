@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             x:Class="WorkSheetMobile.NewWorkPopupView">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8" />         
+    </pages:PopupPage.Animation>
+    <StackLayout Margin="12"
+        Padding="24"
+        BackgroundColor="Bisque"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+        
+        <Label Text="Add New Work" FontAttributes="Bold" FontSize="Large" HorizontalOptions="Center"/>
+        <Picker x:Name="CustomerEntry" Title="Pick a customer"></Picker>
+        <Entry x:Name="TitleEntry" Placeholder="Work Title" ></Entry>
+        <Entry x:Name="DescriptionEntry" Placeholder="Description"></Entry>
+        <Label Text="Add a deadline for the work." FontAttributes="Italic" FontSize="Medium"></Label>
+        <DatePicker x:Name="DeadLinePicker" DateSelected="DeadLinePicker_DateSelected" ></DatePicker>
+        <Button x:Name="SaveWorkButton" Text="Save Work!" BackgroundColor="OrangeRed" BorderColor="Black" BorderWidth="3" TextColor="Black" IsEnabled="False" FontAttributes="Bold" Clicked="SaveWorkButton_Clicked"></Button>
+        
+      </StackLayout>
+ 
+</pages:PopupPage>

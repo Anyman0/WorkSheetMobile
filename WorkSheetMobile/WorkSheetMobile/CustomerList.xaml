@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WorkSheetMobile.CustomerList">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button" >
+                <Setter Property="BackgroundColor" Value="OrangeRed"></Setter>
+                <Setter Property="TextColor" Value="Black"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+                <Setter Property="BorderColor" Value="Black"></Setter>
+                <Setter Property="BorderWidth" Value="3" ></Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="Bisque">
+            <Button x:Name="NewCustomerButton" Text="Add New Customer" Clicked="NewCustomerButton_Clicked"></Button>
+            <ListView x:Name="customerList" BackgroundColor="BlanchedAlmond"></ListView>
+            <Button x:Name="ModifyCustomerButton" Text="Modify Customer" Clicked="ModifyCustomerButton_Clicked"></Button>
+            <Button x:Name="DeleteCustomerButton" Text="Delete Customer" Clicked="DeleteCustomerButton_Clicked"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

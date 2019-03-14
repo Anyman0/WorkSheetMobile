@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8b9c4c866adc44e287f5ca56e1a9e22d" Name="Diagram1">
+        <EntityTypeShape EntityType="WorkSheetDBModel.Contractor" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkSheetDBModel.Customer" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkSheetDBModel.Employee" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkSheetDBModel.Timesheet" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorkSheetDBModel.WorkAssignment" Width="1.5" PointX="3" PointY="11" IsExpanded="true" />
+        <AssociationConnector Association="WorkSheetDBModel.FK_Employees_Contractors" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkSheetDBModel.FK_Timesheets_Contractors" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkSheetDBModel.FK_Timesheets_Customers" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkSheetDBModel.FK_WorkAssignments_Customers" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkSheetDBModel.FK_Timesheets_Employees" ManuallyRouted="false" />
+        <AssociationConnector Association="WorkSheetDBModel.FK_Timesheets_WorkAssignments" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WorkSheetMobile.WorkList">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button" >
+                <Setter Property="BackgroundColor" Value="OrangeRed"></Setter>
+                <Setter Property="TextColor" Value="Black"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+                <Setter Property="BorderColor" Value="Black"></Setter>
+                <Setter Property="BorderWidth" Value="3" ></Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="Bisque">
+            <Button x:Name="NewWorkButton" Text="Add New Work" Clicked="NewWorkButton_Clicked"></Button>
+            <ListView x:Name="workList" BackgroundColor="BlanchedAlmond"></ListView>
+            <Button x:Name="ModifyWorkButton" Text="Modify Work" Clicked="ModifyWorkButton_Clicked"></Button>
+            <Button x:Name="DeleteWorkButton" Text="Delete Work" Clicked="DeleteWorkButton_Clicked"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
