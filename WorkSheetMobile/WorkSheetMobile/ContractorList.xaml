@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WorkSheetMobile.ContractorList">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button" >
+            <Setter Property="BackgroundColor" Value="OrangeRed"></Setter>
+            <Setter Property="TextColor" Value="Black"></Setter>
+            <Setter Property="FontAttributes" Value="Bold"></Setter>
+            <Setter Property="BorderColor" Value="Black"></Setter>
+            <Setter Property="BorderWidth" Value="3" ></Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="Bisque">
+            <Button x:Name="NewContractorButton" Text="Add New Contractor" Clicked="NewContractorButton_Clicked"></Button>
+            <ListView x:Name="contractorList" BackgroundColor="BlanchedAlmond"></ListView>
+            <Button x:Name="ModifyContractorButton" Text="Modify Contractor" IsEnabled="False" Clicked="ModifyContractorButton_Clicked"></Button>
+            <Button x:Name="DeleteContractorButton" Text="Delete Contractor" IsEnabled="False" Clicked="DeleteContractorButton_Clicked"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+    
+</ContentPage>

@@ -20,8 +20,16 @@
       <DependentUpon>AssignWorkPopupView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ContractorList.xaml.cs">
+      <DependentUpon>ContractorList.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)CustomerList.xaml.cs">
       <DependentUpon>CustomerList.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)DeleteContractorPopupView.xaml.cs">
+      <DependentUpon>DeleteContractorPopupView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)DeleteCustomerPopupView.xaml.cs">
@@ -45,6 +53,10 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Models\GpsLocationModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\WorkModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ModifyContractorPopupView.xaml.cs">
+      <DependentUpon>ModifyContractorPopupView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ModifyCustomerPopupView.xaml.cs">
       <DependentUpon>ModifyCustomerPopupView.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -55,6 +67,10 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ModifyWorkPopupView.xaml.cs">
       <DependentUpon>ModifyWorkPopupView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)NewContractorPopupView.xaml.cs">
+      <DependentUpon>NewContractorPopupView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)NewCustomerPopupView.xaml.cs">
@@ -148,6 +164,30 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)AssignWorkPopupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)ContractorList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)NewContractorPopupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)ModifyContractorPopupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)DeleteContractorPopupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>

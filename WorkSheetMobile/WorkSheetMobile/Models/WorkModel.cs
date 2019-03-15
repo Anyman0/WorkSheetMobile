@@ -27,5 +27,15 @@ namespace WorkSheetMobile.Models
         public string ContactPerson { get; set; }
         public string CustomerPhoneNumber { get; set; }
         public string CustomerEmail { get; set; }
+
+        // Contractor fields
+        public string ContOperation { get; set; }
+        public int ContractorId { get; set; }
+        public string ContractorName { get; set; }
+        public string ContractorContactPerson { get; set; }
+        public string ContractorPhoneNumber { get; set; }
+        public string ContractorEmail { get; set; }
+        public string VatId { get; set; }
+        public string HourlyRate { get; set; }
     }
 }

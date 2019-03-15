@@ -52,16 +52,27 @@ namespace WorkSheetMobile
             };
             ToolbarItems.Add(toCustomers);
             toCustomers.Clicked += ToCustomers_Clicked;
-                       
-           
+
+            var toContractors = new ToolbarItem()
+            {
+                Text = "Contractors"
+            };
+            ToolbarItems.Add(toContractors);
+            toContractors.Clicked += ToContractors_Clicked;
 		}
 
+        
         private void EmployeeList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             ModifyEmployeeButton.IsEnabled = true;
             DeleteEmployeeButton.IsEnabled = true;
         }
 
+        //Toolbaritem OnClicks
+        private async void ToContractors_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ContractorList());
+        }
         private async void ToCustomers_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new CustomerList());
@@ -72,6 +83,7 @@ namespace WorkSheetMobile
             await Navigation.PushAsync(new WorkList());
         }
 
+        // Button OnClick-methods
         private async void NewEmployeeButton_Clicked(object sender, EventArgs e)
         {
             await PopupNavigation.PushAsync(new NewEmployeePopupView());

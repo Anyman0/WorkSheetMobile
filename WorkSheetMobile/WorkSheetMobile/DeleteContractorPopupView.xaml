@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             x:Class="WorkSheetMobile.DeleteContractorPopupView">
+
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation
+            DurationIn="400"
+            DurationOut="300"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8" />
+    </pages:PopupPage.Animation>
+
+    <StackLayout Margin="12"
+        Padding="24"
+        BackgroundColor="Bisque"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+
+        <Label Text="Are you sure you want to delete this contractor?" FontAttributes="Bold" FontSize="Large" HorizontalOptions="Center"></Label>
+        <Label x:Name="ContractorNameLabel"></Label>
+        <Label x:Name="ContactPersonLabel"></Label>
+        <Button x:Name="DeleteContractorButton" Text="Delete" BackgroundColor="OrangeRed" BorderColor="Black"  BorderWidth="3" TextColor="Black" FontAttributes="Bold" Clicked="DeleteContractorButton_Clicked"></Button>
+
+
+    </StackLayout>
+  
+</pages:PopupPage>
