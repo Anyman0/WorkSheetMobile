@@ -69,6 +69,7 @@ namespace WorkSheetBackend.Controllers
                 {
                     Employee newEntry = new Employee()
                     {
+                        Id_Contractor = model.ContractorId,
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         PhoneNumber = model.PhoneNumber.ToString(),

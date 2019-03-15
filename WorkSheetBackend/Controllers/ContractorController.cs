@@ -73,7 +73,7 @@ namespace WorkSheetBackend.Controllers
                 if (model.ContOperation == "Save")
                 {
                     Contractor newEntry = new Contractor()
-                    {
+                    {                       
                         CompanyName = model.ContractorName,
                         ContactPerson = model.ContractorContactPerson,
                         PhoneNumber = model.ContractorPhoneNumber,

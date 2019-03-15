@@ -27,6 +27,7 @@ namespace WorkSheetMobile
                 WorkModel data = new WorkModel()
                 {
                     EmpOperation = "Save",
+                    ContractorId = ContractorPicker.SelectedIndex + 1,
                     FirstName = FirstNameEntry.Text,
                     LastName = LastNameEntry.Text,
                     PhoneNumber = int.Parse(PhoneNumberEntry.Text),
@@ -56,6 +57,18 @@ namespace WorkSheetMobile
             {
                 await DisplayAlert("Save Failed!", "Sorry, couldn't get any data from database..", "OK");
             }
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://worksheet.azurewebsites.net");
+            string json = await client.GetStringAsync("/api/contractor");
+            string[] contractors = JsonConvert.DeserializeObject<string[]>(json);
+            ContractorPicker.ItemsSource = contractors;
+            
         }
     }
 }

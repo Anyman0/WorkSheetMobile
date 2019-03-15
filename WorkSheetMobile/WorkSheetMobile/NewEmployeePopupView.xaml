@@ -25,6 +25,7 @@
         VerticalOptions="Center">
 
         <Label Text="Add New Employee" FontAttributes="Bold" FontSize="Large" HorizontalOptions="Center"></Label>
+        <Picker x:Name="ContractorPicker" Title="Contractor"></Picker>
         <Entry x:Name="FirstNameEntry" Placeholder="First name"></Entry>
         <Entry x:Name="LastNameEntry" Placeholder="Last name"></Entry>
         <Entry x:Name="PhoneNumberEntry" Placeholder="Phone" Keyboard="Numeric"></Entry>
