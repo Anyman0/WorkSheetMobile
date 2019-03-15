@@ -18,24 +18,16 @@ namespace WorkSheetMobile
 		public WorkList ()
 		{
 			InitializeComponent ();
-
-            // Disabling buttons until user chooses work from list
-            string chosenId = workList.SelectedItem?.ToString();
-            if (chosenId == null)
-            {
-                NewWorkButton.IsEnabled = false;
-                ModifyWorkButton.IsEnabled = false;
-                DeleteWorkButton.IsEnabled = false;
-            }
+           
             workList.ItemSelected += WorkList_ItemSelected;
 		}
 
         // Enabling buttons
         private void WorkList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            NewWorkButton.IsEnabled = true;
+        {            
             ModifyWorkButton.IsEnabled = true;
             DeleteWorkButton.IsEnabled = true;
+            AssignWorkButton.IsEnabled = true;
         }
 
         // Button Clicked-Actions

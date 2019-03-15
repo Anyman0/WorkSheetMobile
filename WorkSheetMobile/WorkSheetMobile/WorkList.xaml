@@ -17,10 +17,10 @@
         <StackLayout BackgroundColor="Bisque">
             <Button x:Name="NewWorkButton" Text="Add New Work" Clicked="NewWorkButton_Clicked"></Button>
             <ListView x:Name="workList" BackgroundColor="BlanchedAlmond"></ListView>
-            <Button x:Name="AssignWorkButton" Text="Assign Work" Clicked="AssignWorkButton_Clicked"></Button>
+            <Button x:Name="AssignWorkButton" Text="Assign Work" IsEnabled="False" Clicked="AssignWorkButton_Clicked"></Button>
             <StackLayout Orientation="Horizontal">
-                <Button x:Name="ModifyWorkButton" Text="Modify Work" HorizontalOptions="StartAndExpand" Clicked="ModifyWorkButton_Clicked"></Button>
-                <Button x:Name="DeleteWorkButton" Text="Delete Work" Clicked="DeleteWorkButton_Clicked"></Button>
+                <Button x:Name="ModifyWorkButton" Text="Modify Work" IsEnabled="False" HorizontalOptions="StartAndExpand" Clicked="ModifyWorkButton_Clicked"></Button>
+                <Button x:Name="DeleteWorkButton" Text="Delete Work" IsEnabled="False" Clicked="DeleteWorkButton_Clicked"></Button>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

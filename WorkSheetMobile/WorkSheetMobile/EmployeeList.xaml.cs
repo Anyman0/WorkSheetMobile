@@ -34,7 +34,9 @@ namespace WorkSheetMobile
                     await Task.Delay(5000);
                 }
             });
-            
+
+            employeeList.ItemSelected += EmployeeList_ItemSelected;
+
             //Toolbaritems created here
             var GoToWorkList = new ToolbarItem()
             {
@@ -49,9 +51,16 @@ namespace WorkSheetMobile
                 Text = "Customers"
             };
             ToolbarItems.Add(toCustomers);
-            toCustomers.Clicked += ToCustomers_Clicked; 
+            toCustomers.Clicked += ToCustomers_Clicked;
+                       
            
 		}
+
+        private void EmployeeList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            ModifyEmployeeButton.IsEnabled = true;
+            DeleteEmployeeButton.IsEnabled = true;
+        }
 
         private async void ToCustomers_Clicked(object sender, EventArgs e)
         {

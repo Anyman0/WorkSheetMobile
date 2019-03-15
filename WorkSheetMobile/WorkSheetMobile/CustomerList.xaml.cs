@@ -18,7 +18,14 @@ namespace WorkSheetMobile
 		public CustomerList ()
 		{
 			InitializeComponent ();
+            customerList.ItemSelected += CustomerList_ItemSelected;
 		}
+
+        private void CustomerList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            ModifyCustomerButton.IsEnabled = true;
+            DeleteCustomerButton.IsEnabled = true;
+        }
 
         private async void NewCustomerButton_Clicked(object sender, EventArgs e)
         {
