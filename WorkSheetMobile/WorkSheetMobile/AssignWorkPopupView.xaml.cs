@@ -30,7 +30,7 @@ namespace WorkSheetMobile
                 {
                     Operation = "Assign",
                     WorkTitle = TitleLabel.Text,
-                    EmployeeId = EmployeePicker.SelectedIndex
+                    FirstName = EmployeePicker.SelectedItem.ToString()
                 };
 
                 HttpClient client = new HttpClient();

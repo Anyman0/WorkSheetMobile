@@ -37,5 +37,9 @@ namespace WorkSheetMobile.Models
         public string ContractorEmail { get; set; }
         public string VatId { get; set; }
         public string HourlyRate { get; set; }
+
+        // Timesheet fields
+        public string TSOperation { get; set; }
+        public string ChosenEntity { get; set; }
     }
 }

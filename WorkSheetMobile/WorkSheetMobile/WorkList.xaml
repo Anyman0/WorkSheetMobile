@@ -10,6 +10,7 @@
                 <Setter Property="FontAttributes" Value="Bold"></Setter>
                 <Setter Property="BorderColor" Value="Black"></Setter>
                 <Setter Property="BorderWidth" Value="3" ></Setter>
+                <Setter Property="WidthRequest" Value="120"></Setter>
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -17,7 +18,11 @@
         <StackLayout BackgroundColor="Bisque">
             <Button x:Name="NewWorkButton" Text="Add New Work" Clicked="NewWorkButton_Clicked"></Button>
             <ListView x:Name="workList" BackgroundColor="BlanchedAlmond"></ListView>
-            <Button x:Name="AssignWorkButton" Text="Assign Work" IsEnabled="False" Clicked="AssignWorkButton_Clicked"></Button>
+            <StackLayout Orientation="Horizontal">
+                <Button x:Name="ViewListButton" Text="Show works in progress"  HorizontalOptions="StartAndExpand" Clicked="ViewListButton_Clicked"></Button>
+                <Button x:Name="MarkCompleteButton"  Text="Mark Work Completed" IsEnabled="False" IsVisible="False" HorizontalOptions="FillAndExpand" Clicked="MarkCompleteButton_Clicked"></Button>
+                <Button x:Name="AssignWorkButton" Text="Assign Work" IsEnabled="False" Clicked="AssignWorkButton_Clicked"></Button>
+            </StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Button x:Name="ModifyWorkButton" Text="Modify Work" IsEnabled="False" HorizontalOptions="StartAndExpand" Clicked="ModifyWorkButton_Clicked"></Button>
                 <Button x:Name="DeleteWorkButton" Text="Delete Work" IsEnabled="False" Clicked="DeleteWorkButton_Clicked"></Button>

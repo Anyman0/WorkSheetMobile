@@ -28,12 +28,12 @@ namespace WorkSheetMobile
                 WorkModel data = new WorkModel()
                 {
                     Operation = "Save",
-                    CustomerId = CustomerEntry.SelectedIndex + 1,
+                    CustomerName = CustomerEntry.SelectedItem.ToString(),
                     WorkTitle = TitleEntry.Text,
                     Description = DescriptionEntry.Text,
                     Deadline = DeadLinePicker.Date,
                 };
-
+                
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri("https://worksheet.azurewebsites.net");
                 string input = JsonConvert.SerializeObject(data);

@@ -19,7 +19,7 @@ namespace WorkSheetBackend.Controllers
 
             try
             {
-                WorkAssignments = (from wa in entities.WorkAssignments where (wa.Active == true) select wa.Title).ToArray();
+                WorkAssignments = (from wa in entities.WorkAssignments where (wa.Active == true) && (wa.InProgressAt == null) select wa.Title).ToArray();
             }
             finally
             {
@@ -30,17 +30,17 @@ namespace WorkSheetBackend.Controllers
         }
 
 
-        // GET: Get chosen information of the chosen work
-        public string[] GetChosenWork(string workId)
+        // GET: Get works in progress
+        public string[] GetWorksInProgress(int id)
         {
             WorksheetEntities entities = new WorksheetEntities();
-
+            id = 5; 
             try
             {
-                string chosenWorkId = workId;
+                
                 string[] chosenWorkData = (from cw in entities.WorkAssignments
-                                           where (cw.Active == true) && (cw.Title == chosenWorkId)
-                                           select cw.Title + " " + cw.Description + " " + cw.Deadline).ToArray();
+                                           where (cw.Active == true) && (cw.InProgressAt != null) && (cw.Completed != true)
+                                           select cw.Title + " | Started at:  " + cw.InProgressAt).ToArray();
 
                 return chosenWorkData;
             }
@@ -88,6 +88,8 @@ namespace WorkSheetBackend.Controllers
         {
             WorksheetEntities entities = new WorksheetEntities();
 
+            Customer customer = (from cu in entities.Customers where (cu.Active == true) && (cu.CustomerName == model.CustomerName) select cu).FirstOrDefault();
+
             try
             {
                 // Save chosen work
@@ -95,7 +97,7 @@ namespace WorkSheetBackend.Controllers
                 {
                     WorkAssignment newEntry = new WorkAssignment()
                     {
-                        Id_Customer = model.CustomerId,
+                        Id_Customer = customer.Id_Customer,
                         Title = model.WorkTitle,
                         Description = model.Description,
                         Deadline = model.Deadline,
@@ -158,7 +160,13 @@ namespace WorkSheetBackend.Controllers
                     {
                         return false;
                     }
-                   
+
+                    Employee emp = (from e in entities.Employees where (e.FirstName + " " + e.LastName == model.FirstName) select e).FirstOrDefault();
+                    if (emp == null)
+                    {
+                        return false;
+                    }
+
                     int workId = assignment.Id_WorkAssignment;
                     int customerId = assignment.Id_Customer.Value;                   
 
@@ -167,7 +175,8 @@ namespace WorkSheetBackend.Controllers
                     Timesheet newEntry = new Timesheet()
                     {
                         Id_Customer = customerId,
-                        Id_Employee = model.EmployeeId,
+                        Id_Contractor = emp.Id_Contractor,
+                        Id_Employee = emp.Id_Employee,
                         Id_WorkAssignment = workId,
                         StartTime = DateTime.Now,
                         CreatedAt = DateTime.Now,
@@ -176,6 +185,32 @@ namespace WorkSheetBackend.Controllers
                     };
 
                     entities.Timesheets.Add(newEntry);
+                                       
+                }
+
+                else if(model.Operation == "MarkComplete")
+                {
+                    WorkAssignment assignment = (from wa in entities.WorkAssignments where (wa.Title + " | Started at:  " + wa.InProgressAt == model.WorkTitle) && (wa.Active == true) && (wa.InProgress == true) && (wa.InProgressAt != null) select wa).FirstOrDefault();
+                    if (assignment == null)
+                    {
+                        return false;
+                    }
+
+                    int workId = assignment.Id_WorkAssignment;
+                    int customerId = assignment.Id_Customer.Value;
+
+                    assignment.CompletedAt = DateTime.Now;
+                    assignment.Completed = true;
+                    assignment.InProgress = false;
+
+                    Timesheet existing = (from e in entities.Timesheets where (e.Id_WorkAssignment == workId) && (e.Id_Customer == customerId) select e).FirstOrDefault();
+                    if (existing != null)
+                    {
+                        existing.WorkComplete = true;
+                        existing.StopTime = DateTime.Now;
+                        existing.LastModifiedAt = DateTime.Now;
+                        existing.Comments = "Work set to complete by Admin";
+                    }
                                        
                 }
 

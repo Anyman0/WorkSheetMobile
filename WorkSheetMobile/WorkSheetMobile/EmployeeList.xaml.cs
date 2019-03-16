@@ -59,9 +59,16 @@ namespace WorkSheetMobile
             };
             ToolbarItems.Add(toContractors);
             toContractors.Clicked += ToContractors_Clicked;
+
+            var toTimesheets = new ToolbarItem()
+            {
+                Text = "Timesheets"
+            };
+            ToolbarItems.Add(toTimesheets);
+            toTimesheets.Clicked += ToTimesheets_Clicked;
 		}
 
-        
+      
         private void EmployeeList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             ModifyEmployeeButton.IsEnabled = true;
@@ -81,6 +88,11 @@ namespace WorkSheetMobile
         private async void GoToWorkList_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new WorkList());
+        }
+
+        private async void ToTimesheets_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new TimesheetList());
         }
 
         // Button OnClick-methods

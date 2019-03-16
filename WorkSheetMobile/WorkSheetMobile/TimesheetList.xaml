@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"            
+             x:Class="WorkSheetMobile.TimesheetList">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button" >
+                <Setter Property="BackgroundColor" Value="OrangeRed"></Setter>
+                <Setter Property="TextColor" Value="Black"></Setter>
+                <Setter Property="FontAttributes" Value="Bold"></Setter>
+                <Setter Property="BorderColor" Value="Black"></Setter>
+                <Setter Property="BorderWidth" Value="3" ></Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="Bisque">
+
+            <StackLayout>
+                <Label x:Name="ChosenEntityLabel"></Label>
+                <Label x:Name="HoursLabel"></Label>
+            </StackLayout>
+            
+            <StackLayout>
+                <Button x:Name="SearchContractorDataButton" Text="Search hours of a contractor" Clicked="SearchContractorDataButton_Clicked"></Button>
+                <Picker x:Name="ChooseContractorPicker" Title="Choose a contractor"></Picker>
+                <Button x:Name="SearchWorkDataButton" Text="Search hours per workassignment" Clicked="SearchWorkDataButton_Clicked"></Button>
+                <Picker x:Name="ChooseWorkPicker" Title="Choose Work"></Picker>
+                <Button x:Name="EmployeeInfoButton" Text="Search hours of an employee" Clicked="EmployeeInfoButton_Clicked"></Button>
+                <Picker x:Name="ChooseEmployeePicker" Title="Choose an employee"></Picker>
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
