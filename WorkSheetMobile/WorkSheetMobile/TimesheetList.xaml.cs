@@ -73,20 +73,20 @@ namespace WorkSheetMobile
         {
             chosenEntity = ChooseContractorPicker.SelectedItem?.ToString();
 
-            HttpClient client = new HttpClient();
+            /*HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("https://worksheet.azurewebsites.net");
             string json = await client.GetStringAsync("/api/timesheet?chosenEntity=" + chosenEntity);
             string [] chosenWorkModel = JsonConvert.DeserializeObject<string[]>(json);
-            testList.ItemsSource = chosenWorkModel;
+            testList.ItemsSource = chosenWorkModel;*/
             
-            /*try
+            try
             {
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri("https://worksheet.azurewebsites.net");
                 string json = await client.GetStringAsync("/api/timesheet?chosenEntity=" + chosenEntity);
                 WorkModel chosenWorkModel = JsonConvert.DeserializeObject<WorkModel>(json);
                 chosenData = chosenWorkModel;
-                testList.ItemsSource = chosenData.ContractorPickerData;
+                testList.ItemsSource = chosenData.ContractorPickerData;               
                 ChosenEntityLabel.Text = chosenData.ContractorName;
                 ChosenEntityLabel1.Text = chosenData.WorkTitle;
                 ChosenEntityLabel2.Text = chosenData.FirstName;
@@ -95,7 +95,7 @@ namespace WorkSheetMobile
             catch
             {
                 await DisplayAlert("Failed!", "Sorry, this contractor's employees doesnt have any completed work..", "OK");
-            }*/
+            }
         }
 
         private void SearchButton_Clicked(object sender, EventArgs e)

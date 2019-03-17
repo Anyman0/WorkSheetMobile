@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -38,12 +39,16 @@ namespace WorkSheetMobile.Models
         public string VatId { get; set; }
         public string HourlyRate { get; set; }
 
-        // Timesheet fields       
-        public string[] WorkPickerData { get; set; }
+        // Timesheet fields           
+        public string[] WorkPickerData { get; set; } 
         public string[] EmployeePickerData { get; set; }
         public string[] ContractorPickerData { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime StopTime { get; set; }
         public double CountedHours { get; set; }
+
+        // Login fields
+        public string UserName { get; set; }
+        public byte[] Password { get; set; } 
     }
 }

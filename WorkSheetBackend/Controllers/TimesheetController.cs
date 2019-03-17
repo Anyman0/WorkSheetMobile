@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -47,20 +48,22 @@ namespace WorkSheetBackend.Controllers
         }
 
         // Exploring with IDs
-        public string[] GetAllContractors(string chosenEntity)
+        /*public string[] GetAllContractors(string chosenEntity)
         {
             WorkModel data = new WorkModel();
             WorksheetEntities entities = new WorksheetEntities();
-            Contractor contr = (from c in entities.Contractors where (c.CompanyName == chosenEntity) select c).FirstOrDefault();           
-           
+            Contractor contr = (from c in entities.Contractors where (c.CompanyName == chosenEntity) select c).FirstOrDefault();
+
             string[] allIds = (from e in entities.Timesheets where (e.Id_Contractor == contr.Id_Contractor) select e.Id_Customer + " " + e.Id_Employee + " " + e.Id_WorkAssignment).ToArray();
-                                       
+
+            Timesheet chosenEntityData = (from c in entities.Timesheets where (contr.CompanyName == chosenEntity) select c).FirstOrDefault();
+            
 
             return allIds;
-        }
+        }*/
 
         // Get Model for chosen entity  TODO: FIX LISTING ISSUES!!
-        /*public WorkModel GetModel (string chosenEntity)
+        public WorkModel GetModel (string chosenEntity)
         {
             WorkModel model = new WorkModel();
             WorksheetEntities entities = new WorksheetEntities();
@@ -95,11 +98,14 @@ namespace WorkSheetBackend.Controllers
                 contractor = (from co in entities.Contractors where (co.Id_Contractor == chosenEntityData.Id_Contractor) select co).FirstOrDefault();
                 employee = (from e in entities.Employees where (e.Id_Employee == chosenEntityData.Id_Employee) select e).FirstOrDefault();
                 assignment = (from wa in entities.WorkAssignments where (wa.Id_WorkAssignment == chosenEntityData.Id_WorkAssignment) select wa).FirstOrDefault();               
+                string[] contr = (from con in entities.Contractors where (con.Id_Contractor == chosenEntityData.Id_Contractor) select con.CompanyName).ToArray();
+                string[] empl = (from e in entities.Employees where (e.Id_Employee == chosenEntityData.Id_Employee) select e.FirstName).ToArray();
                 string[] everyContractor = (from ec in entities.Timesheets where (ec.Id_Contractor == contractor.Id_Contractor) select contractor.CompanyName + " | " + employee.FirstName + " | " + assignment.Title).ToArray();
-
+               
 
                 WorkModel chosenEntityModel = new WorkModel()
                 {
+                    
                     ContractorPickerData = everyContractor,
                     ContractorName = contractor.CompanyName,
                     FirstName = employee.FirstName + " " + employee.LastName,
@@ -118,7 +124,7 @@ namespace WorkSheetBackend.Controllers
                 entities.Dispose();
             }
             
-        }*/
+        }
 
     }
 }

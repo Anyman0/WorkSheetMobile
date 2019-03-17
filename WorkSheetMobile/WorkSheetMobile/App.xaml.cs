@@ -11,7 +11,7 @@ namespace WorkSheetMobile
 		{
 			InitializeComponent();
             
-            MainPage = new NavigationPage(new EmployeeList());
+            MainPage = new NavigationPage(new LoginPage());
                       
 		}
 
