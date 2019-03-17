@@ -11,15 +11,23 @@
                 <Setter Property="BorderColor" Value="Black"></Setter>
                 <Setter Property="BorderWidth" Value="3" ></Setter>
             </Style>
+            <Style TargetType="Label" >
+                <Setter Property="FontAttributes" Value="Italic"></Setter>
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
     
     <ContentPage.Content>
         <StackLayout BackgroundColor="Bisque">
-
-            <StackLayout>
+            
+            <StackLayout BackgroundColor="Bisque">
                 <Label x:Name="ChosenEntityLabel"></Label>
+                <Label x:Name="ChosenEntityLabel1"></Label>
+                <Label x:Name="ChosenEntityLabel2"></Label>
+                <Label x:Name="ChosenEntityLabel3"></Label>
+                <Label x:Name="ChosenEntityLabel4"></Label>
                 <Label x:Name="HoursLabel"></Label>
+                <ListView x:Name="testList"></ListView>
             </StackLayout>
             
             <StackLayout>
@@ -29,6 +37,7 @@
                 <Picker x:Name="ChooseWorkPicker" Title="Choose Work"></Picker>
                 <Button x:Name="EmployeeInfoButton" Text="Search hours of an employee" Clicked="EmployeeInfoButton_Clicked"></Button>
                 <Picker x:Name="ChooseEmployeePicker" Title="Choose an employee"></Picker>
+                <Button x:Name="SearchButton" Text="Search" Clicked="SearchButton_Clicked"></Button>
             </StackLayout>
 
         </StackLayout>

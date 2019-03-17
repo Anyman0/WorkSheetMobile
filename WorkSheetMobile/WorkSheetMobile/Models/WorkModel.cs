@@ -38,8 +38,12 @@ namespace WorkSheetMobile.Models
         public string VatId { get; set; }
         public string HourlyRate { get; set; }
 
-        // Timesheet fields
-        public string TSOperation { get; set; }
-        public string ChosenEntity { get; set; }
+        // Timesheet fields       
+        public string[] WorkPickerData { get; set; }
+        public string[] EmployeePickerData { get; set; }
+        public string[] ContractorPickerData { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime StopTime { get; set; }
+        public double CountedHours { get; set; }
     }
 }
