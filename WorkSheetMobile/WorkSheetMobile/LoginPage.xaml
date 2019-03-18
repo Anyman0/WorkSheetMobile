@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="WorkSheetMobile.LoginPage">
+             x:Class="WorkSheetMobile.LoginPage" BackgroundColor="Bisque">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Button" >
@@ -16,9 +16,13 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <Entry x:Name="UserNameEntry" Placeholder="UserName" VerticalOptions="Center"></Entry>
-            <Entry x:Name="PasswordEntry" Placeholder="Password" VerticalOptions="Center"></Entry>
+            <Label Text="Welcome to use the Worksheet App" HorizontalOptions="CenterAndExpand" FontSize="Large" FontAttributes="Italic"  Margin="80" ></Label>
+            <StackLayout VerticalOptions="CenterAndExpand">
+            <Entry x:Name="UserNameEntry" BackgroundColor="AntiqueWhite" TextColor="Black"  Placeholder="UserName" VerticalOptions="Center"></Entry>
+            <Entry x:Name="PasswordEntry" BackgroundColor="AntiqueWhite" TextColor="Black" Placeholder="Password" VerticalOptions="Center"></Entry>
             <Button x:Name="LoginButton" BackgroundColor="OrangeRed" Text="Login" Clicked="LoginButton_Clicked"></Button>
+        </StackLayout>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

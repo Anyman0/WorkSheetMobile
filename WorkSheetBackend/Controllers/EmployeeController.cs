@@ -26,7 +26,7 @@ namespace WorkSheetBackend.Controllers
             
             return employees;
         }
-
+      
 
         // GET: Getting model
         public WorkModel GetModel(string employeeName)
@@ -62,14 +62,17 @@ namespace WorkSheetBackend.Controllers
         public bool PostEmployee(WorkModel model)
         {
             WorksheetEntities entities = new WorksheetEntities();
-
+            
             try
             {
                 if (model.EmpOperation == "Save")
                 {
+                    Contractor contractor = (from c in entities.Contractors where (c.CompanyName == model.ContractorName) select c).FirstOrDefault();
                     Employee newEntry = new Employee()
                     {
-                        Id_Contractor = model.ContractorId,
+                        Id_Contractor = contractor.Id_Contractor,
+                        Username = model.UserName,
+                        Password = model.Password,
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         PhoneNumber = model.PhoneNumber.ToString(),

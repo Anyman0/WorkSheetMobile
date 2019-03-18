@@ -4,11 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using WorkSheetMobile.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+
 
 namespace WorkSheetMobile
 {
@@ -17,17 +19,25 @@ namespace WorkSheetMobile
 	{
 		public NewEmployeePopupView ()
 		{
-			InitializeComponent ();
+			InitializeComponent ();           
 		}
+       
 
         private async void SaveEmployeeButton_Clicked(object sender, EventArgs e)
         {
             try
             {
+                SHA512 sha512 = SHA512.Create();
+                byte[] bytes = Encoding.UTF8.GetBytes(EmployeePasswordEntry.Text);
+                byte[] hash = sha512.ComputeHash(bytes);
+               
+
                 WorkModel data = new WorkModel()
                 {
                     EmpOperation = "Save",
-                    ContractorId = ContractorPicker.SelectedIndex + 1,
+                    ContractorName = ContractorPicker.SelectedItem.ToString(),
+                    UserName = EmployeeUsernameEntry.Text, 
+                    Password = hash,
                     FirstName = FirstNameEntry.Text,
                     LastName = LastNameEntry.Text,
                     PhoneNumber = int.Parse(PhoneNumberEntry.Text),
@@ -57,7 +67,8 @@ namespace WorkSheetMobile
             {
                 await DisplayAlert("Save Failed!", "Sorry, couldn't get any data from database..", "OK");
             }
-        }
+        }       
+
 
         protected override async void OnAppearing()
         {

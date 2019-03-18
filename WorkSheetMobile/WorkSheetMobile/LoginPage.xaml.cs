@@ -23,33 +23,16 @@ namespace WorkSheetMobile
         private async void LoginButton_Clicked(object sender, EventArgs e)
         {
 
-            
-            byte[] logdata = new byte[PasswordEntry.Text.Length];
-            byte[] result;
-            SHA512 shaM = new SHA512Managed();
-            result = shaM.ComputeHash(logdata);
-
-            byte[] HashedPW = result;
-
-            WorkModel logData = new WorkModel()
-            {
-                UserName = UserNameEntry.Text,
-                Password = result             
-            };
+            string logData = UserNameEntry.Text + " " + PasswordEntry.Text;
 
             try
             {
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri("https://worksheet.azurewebsites.net");
-                string input = JsonConvert.SerializeObject(logData);
-                StringContent content = new StringContent(input, Encoding.UTF8, "application/json");
+                string json = await client.GetStringAsync("/api/login?LogData=" + logData);
+                bool state = JsonConvert.DeserializeObject<bool>(json);
 
-                HttpResponseMessage message = await client.PostAsync("/api/work", content);
-                string reply = await message.Content.ReadAsStringAsync();
-                bool success = JsonConvert.DeserializeObject<bool>(reply);
-                
-
-                if (success)
+                if (state)
                 {
                     await Navigation.PushAsync(new EmployeeList());
                 }

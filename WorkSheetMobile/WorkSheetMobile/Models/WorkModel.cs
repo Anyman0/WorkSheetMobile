@@ -50,5 +50,6 @@ namespace WorkSheetMobile.Models
         // Login fields
         public string UserName { get; set; }
         public byte[] Password { get; set; } 
+        public string PasswordString { get; set; } 
     }
 }

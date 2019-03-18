@@ -54,6 +54,7 @@ namespace WorkSheetMobile.Droid
             Models.GpsLocationModel.Altitude = location.Altitude;
         }
 
+        
         public void OnProviderDisabled(string provider)
         {
             throw new NotImplementedException();
