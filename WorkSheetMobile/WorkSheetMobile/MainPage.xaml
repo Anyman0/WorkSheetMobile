@@ -2,24 +2,22 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:WorkSheetMobile"
-             x:Class="WorkSheetMobile.MainPage">
+             x:Class="WorkSheetMobile.MainPage" BackgroundColor="Bisque">
     <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style TargetType="Entry">
-                <Setter Property="HorizontalOptions" Value="Fill" />
-                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
-                <Setter Property="BackgroundColor" Value="Black" />
-                <Setter Property="FontAttributes" Value="Italic" />
-                <Setter Property="TextColor" Value="Yellow" />
-            </Style>
-        </ResourceDictionary>
+        
     </ContentPage.Resources>
+       
     <StackLayout>
-        <!-- Place new controls here -->
-    	<Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
-        <Entry Placeholder= "Test type here" ></Entry>
+        <Label x:Name="WelcomeUserLabel" FontAttributes="Bold" TextColor="Black" FontSize="Large" HorizontalOptions="Center"></Label>
+        <Button x:Name="LogOutButton" Text="Logout" Clicked="LogOutButton_Clicked" ></Button>
+        <StackLayout  VerticalOptions="EndAndExpand">
+            <Button x:Name="ToEmployeesButton" Text="Employees" Clicked="ToEmployeesButton_Clicked"></Button>
+            <Button x:Name="ToCustomersButton" Text="Customers" Clicked="ToCustomersButton_Clicked"></Button>
+            <Button x:Name="ToContractorsButton" Text="Contractors" Clicked="ToContractorsButton_Clicked"></Button>
+            <Button x:Name="ToWorkassignmentsButton" Text="Workassignments" Clicked="ToWorkassignmentsButton_Clicked"></Button>
+            <Button x:Name="ToTimesheetsButton" Text="Timesheets" Clicked="ToTimesheetsButton_Clicked"></Button>
+        </StackLayout>
+        
     </StackLayout>
 
 </ContentPage>

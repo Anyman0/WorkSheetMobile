@@ -54,5 +54,34 @@ namespace WorkSheetBackend.Controllers
 
         }
 
+        [HttpGet]
+        public WorkModel GetProfileInfo(string userName)
+        {
+            
+            WorksheetEntities entities = new WorksheetEntities();
+
+            try
+            {
+               
+                Employee profile = (from p in entities.Employees where (p.Active == true) && (p.Username == userName) select p).FirstOrDefault();
+
+                WorkModel loggedProfile = new WorkModel()
+                {
+                    FirstName = profile.FirstName,
+                    LastName = profile.LastName,
+                    PhoneNumber = int.Parse(profile.PhoneNumber),
+                    Email = profile.EmailAddress,
+                    UserName = profile.Username
+                };
+
+                return loggedProfile;
+            }
+
+            finally
+            {
+                entities.Dispose();
+            }
+        }
+
     }
 }
