@@ -28,6 +28,7 @@
       <DependentUpon>CustomerList.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Data\LoginDatabase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DeleteContractorPopupView.xaml.cs">
       <DependentUpon>DeleteContractorPopupView.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -56,6 +57,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Models\GpsLocationModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\LoginDBModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\WorkModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ModifyContractorPopupView.xaml.cs">
       <DependentUpon>ModifyContractorPopupView.xaml</DependentUpon>
@@ -87,6 +89,10 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)NewWorkPopupView.xaml.cs">
       <DependentUpon>NewWorkPopupView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)TestPage.xaml.cs">
+      <DependentUpon>TestPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)TimesheetList.xaml.cs">
@@ -208,6 +214,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)LoginPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)TestPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>

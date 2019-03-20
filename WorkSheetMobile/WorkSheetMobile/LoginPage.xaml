@@ -18,11 +18,14 @@
         <StackLayout>
             <Label Text="Welcome to use the Worksheet App" HorizontalOptions="CenterAndExpand" FontSize="Large" FontAttributes="Italic"  Margin="80" ></Label>
             <StackLayout VerticalOptions="CenterAndExpand">
-            <Entry x:Name="UserNameEntry" BackgroundColor="AntiqueWhite" TextColor="Black"  Placeholder="UserName" VerticalOptions="Center"></Entry>
-            <Entry x:Name="PasswordEntry" BackgroundColor="AntiqueWhite" TextColor="Black" Placeholder="Password" VerticalOptions="Center"></Entry>
-            <Button x:Name="LoginButton" BackgroundColor="OrangeRed" Text="Login" Clicked="LoginButton_Clicked"></Button>
-        </StackLayout>
-            
+                <Entry x:Name="UserNameEntry" BackgroundColor="AntiqueWhite" TextColor="Black"  Placeholder="UserName" VerticalOptions="Center"></Entry>
+                <Entry x:Name="PasswordEntry" BackgroundColor="AntiqueWhite" TextColor="Black" Placeholder="Password" VerticalOptions="Center"></Entry>
+                <Label Text="Remember me!" FontAttributes="Italic" FontSize="Medium"></Label>
+                <Switch x:Name="RememberButton" BackgroundColor="BurlyWood" PropertyChanged="RememberButton_PropertyChanged"></Switch> 
+                <Button x:Name="LoginButton" BackgroundColor="OrangeRed" Text="Login" Clicked="LoginButton_Clicked"></Button>
+                <ListView x:Name="checkLogin" Margin="20" >
+                </ListView>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -64,11 +64,24 @@ namespace WorkSheetMobile
             {
                 Text = "Timesheets"
             };
-            ToolbarItems.Add(toTimesheets);
+            //ToolbarItems.Add(toTimesheets);
             toTimesheets.Clicked += ToTimesheets_Clicked;
+
+            var LogOut = new ToolbarItem()
+            {
+                Text = "Logout"
+            };
+            ToolbarItems.Add(LogOut);
+            LogOut.Clicked += LogOut_Clicked;
 		}
 
-      
+        private async void LogOut_Clicked(object sender, EventArgs e)
+        {
+            LoginDBModel data = new LoginDBModel();
+            await App.LDatabase.DeleteItemAsync(data);
+            await Navigation.PushAsync(new LoginPage());
+        }
+
         private void EmployeeList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             ModifyEmployeeButton.IsEnabled = true;
