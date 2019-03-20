@@ -13,17 +13,22 @@ namespace WorkSheetBackend.Controllers
     {       
         public string[] GetAll()
         {
-            string[] employees = null;
+            string[] employees = null;          
             WorksheetEntities entities = new WorksheetEntities();
+ 
             try
-            {
-                employees = (from e in entities.Employees where (e.Active == true) select e.FirstName + " " + e.LastName).ToArray();
+            {               
+                employees = (from e in entities.Employees where (e.Active == true) select e.FirstName + " " + e.LastName).ToArray();                                     
             }
+            catch
+            {
+
+            }            
             finally
             {
                 entities.Dispose();
             }
-            
+
             return employees;
         }
       

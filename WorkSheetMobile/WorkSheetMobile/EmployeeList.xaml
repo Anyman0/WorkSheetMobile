@@ -15,13 +15,8 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout BackgroundColor="Bisque">
-            <Button x:Name="NewEmployeeButton" Text="Add New Employee" Clicked="NewEmployeeButton_Clicked"></Button>
             <ListView x:Name="employeeList" BackgroundColor="BlanchedAlmond"></ListView>
-            <StackLayout>
-                <Button x:Name="ModifyEmployeeButton" Text="Modify Employee" IsEnabled="False" Clicked="ModifyEmployeeButton_Clicked"></Button>
-                <Button x:Name="DeleteEmployeeButton" Text="Delete Employee" IsEnabled="False" Clicked="DeleteEmployeeButton_Clicked"></Button>
-            </StackLayout>
-        <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal">
                 <Label Text="Latitude: "></Label>
                 <Label x:Name="latitudeLabel" Text="0.00"></Label>
                 <Label Text="Longitude: "></Label>

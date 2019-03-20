@@ -38,93 +38,67 @@ namespace WorkSheetMobile
             employeeList.ItemSelected += EmployeeList_ItemSelected;
 
             //Toolbaritems created here
-            var GoToWorkList = new ToolbarItem()
+            var AddNewEmployee = new ToolbarItem()
             {
-                Text = "Work List",
-                
+                Text = "New",                
             };
-            GoToWorkList.Clicked += GoToWorkList_Clicked;
-            ToolbarItems.Add(GoToWorkList);
+            AddNewEmployee.Clicked += AddNewEmployee_Clicked;
+            ToolbarItems.Add(AddNewEmployee);
 
-            var toCustomers = new ToolbarItem()
+            var ModifyEmployee = new ToolbarItem()
             {
-                Text = "Customers"
+                Text = "Modify"
             };
-            ToolbarItems.Add(toCustomers);
-            toCustomers.Clicked += ToCustomers_Clicked;
+            ToolbarItems.Add(ModifyEmployee);
+            ModifyEmployee.Clicked += ModifyEmployee_Clicked;
 
-            var toContractors = new ToolbarItem()
+            var DeleteEmployee = new ToolbarItem()
             {
-                Text = "Contractors"
+                Text = "Delete",               
             };
-            ToolbarItems.Add(toContractors);
-            toContractors.Clicked += ToContractors_Clicked;
-
-            var toTimesheets = new ToolbarItem()
-            {
-                Text = "Timesheets"
-            };
-            //ToolbarItems.Add(toTimesheets);
-            toTimesheets.Clicked += ToTimesheets_Clicked;
-
-            var LogOut = new ToolbarItem()
-            {
-                Text = "Logout"
-            };
-            ToolbarItems.Add(LogOut);
-            LogOut.Clicked += LogOut_Clicked;
+            ToolbarItems.Add(DeleteEmployee);
+            DeleteEmployee.Clicked += DeleteEmployee_Clicked;
+          
 		}
 
-        private async void LogOut_Clicked(object sender, EventArgs e)
-        {
-            LoginDBModel data = new LoginDBModel();
-            await App.LDatabase.DeleteItemAsync(data);
-            await Navigation.PushAsync(new LoginPage());
-        }
-
-        private void EmployeeList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            ModifyEmployeeButton.IsEnabled = true;
-            DeleteEmployeeButton.IsEnabled = true;
-        }
-
         //Toolbaritem OnClicks
-        private async void ToContractors_Clicked(object sender, EventArgs e)
+        private async void DeleteEmployee_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ContractorList());
-        }
-        private async void ToCustomers_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new CustomerList());
-        }
-
-        private async void GoToWorkList_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new WorkList());
-        }
-
-        private async void ToTimesheets_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new TimesheetList());
+            string chosenEmployee = employeeList.SelectedItem?.ToString();
+            if (chosenEmployee == null)
+            {
+                await DisplayAlert("Whoopsie", "Choose an employee first.", "OK");
+            }
+            else
+            {
+                await PopupNavigation.PushAsync(new DeleteEmployeePopupView(chosenEmployee));
+            }
         }
 
-        // Button OnClick-methods
-        private async void NewEmployeeButton_Clicked(object sender, EventArgs e)
+        private async void ModifyEmployee_Clicked(object sender, EventArgs e)
+        {
+            string chosenEmployee = employeeList.SelectedItem?.ToString();
+            if (chosenEmployee == null)
+            {
+                await DisplayAlert("Whoopsie", "Choose an employee first.", "OK");
+            }
+            else
+            {
+                await PopupNavigation.PushAsync(new ModifyEmployeePopupView(chosenEmployee));
+            }
+        }
+
+        private async void AddNewEmployee_Clicked(object sender, EventArgs e)
         {
             await PopupNavigation.PushAsync(new NewEmployeePopupView());
         }
+       
 
-        private async void ModifyEmployeeButton_Clicked(object sender, EventArgs e)
+        private void EmployeeList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            string chosenEmployee = employeeList.SelectedItem?.ToString();
-            await PopupNavigation.PushAsync(new ModifyEmployeePopupView(chosenEmployee));
+            
         }
-
-        private async void DeleteEmployeeButton_Clicked(object sender, EventArgs e)
-        {
-            string chosenEmployee = employeeList.SelectedItem?.ToString();
-            await PopupNavigation.PushAsync(new DeleteEmployeePopupView(chosenEmployee));
-        }
+               
 
         protected override async void OnAppearing()
         {
