@@ -21,50 +21,101 @@ namespace WorkSheetMobile
 			InitializeComponent ();
            
             workList.ItemSelected += WorkList_ItemSelected;
+
+            //Toolbaritems created here
+            var AddNewWork = new ToolbarItem()
+            {
+                Text = "New",
+            };
+            AddNewWork.Clicked += AddNewWork_Clicked;
+            ToolbarItems.Add(AddNewWork);
+
+            var ModifyWork = new ToolbarItem()
+            {
+                Text = "Modify",                
+            };
+            ToolbarItems.Add(ModifyWork);
+            ModifyWork.Clicked += ModifyWork_Clicked;
+
+            var DeleteWork = new ToolbarItem()
+            {
+                Text = "Delete",
+            };
+            ToolbarItems.Add(DeleteWork);
+            DeleteWork.Clicked += DeleteWork_Clicked;
+
+        }
+
+        private async void DeleteWork_Clicked(object sender, EventArgs e)
+        {
+            string WorkID = workList.SelectedItem?.ToString();
+            string workid = null;
+
+            if (WorkID != null)
+            {
+                string[] work = WorkID.Split(new string[] { " | " }, StringSplitOptions.RemoveEmptyEntries);
+                workid = work[0];
+            }
+
+            if (WorkID == null)
+            {
+                await DisplayAlert("Whoopsie", "Choose a work first.", "OK");
+            }
+            else if (ViewListButton.Text == "Show unassigned works")
+            {
+                await PopupNavigation.PushAsync(new DeleteWorkPopupView(workid));
+            }
+            else
+            {
+                await PopupNavigation.PushAsync(new DeleteWorkPopupView(WorkID));
+            }
+        }
+
+        private async void ModifyWork_Clicked(object sender, EventArgs e)
+        {
+            string WorkID = workList.SelectedItem?.ToString();
+            string workid = null;
+
+            if (WorkID != null)
+            {
+                string[] work = WorkID.Split(new string[] { " | " }, StringSplitOptions.RemoveEmptyEntries);
+                workid = work[0];
+            }
+
+            if (WorkID == null)
+            {
+                await DisplayAlert("Whoopsie", "Choose a work first.", "OK");
+            }
+            else if (ViewListButton.Text == "Show unassigned works" && WorkID != null)
+            {                
+                await PopupNavigation.PushAsync(new ModifyWorkPopupView(workid));
+            }
+            else
+            {
+                await PopupNavigation.PushAsync(new ModifyWorkPopupView(WorkID));
+            }
             
-		}
+        }
+
+        private async void AddNewWork_Clicked(object sender, EventArgs e)
+        {
+            await PopupNavigation.PushAsync(new NewWorkPopupView());
+        }
 
         // Enabling buttons
         private void WorkList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {            
-            ModifyWorkButton.IsEnabled = true;
-            DeleteWorkButton.IsEnabled = true;
+            
             AssignWorkButton.IsEnabled = true;
             MarkCompleteButton.IsEnabled = true;
         }
 
-        // Button Clicked-Actions
-        private async void NewWorkButton_Clicked(object sender, EventArgs e)
-        {
-             await PopupNavigation.PushAsync(new NewWorkPopupView());           
-        }
 
-        private async void ModifyWorkButton_Clicked(object sender, EventArgs e)
-        {
-            string WorkID = workList.SelectedItem?.ToString();
-            await PopupNavigation.PushAsync(new ModifyWorkPopupView(WorkID));
-        }
-
-        public async void DeleteWorkButton_Clicked(object sender, EventArgs e)
-        {
-            string WorkID = workList.SelectedItem?.ToString();
-            await PopupNavigation.PushAsync(new DeleteWorkPopupView(WorkID));
-        }
-
+        // Assign work      
         private async void AssignWorkButton_Clicked(object sender, EventArgs e)
         {
             string WorkID = workList.SelectedItem?.ToString();
             await PopupNavigation.PushAsync(new AssignWorkPopupView(WorkID));
-        }
-
-        protected override async void OnAppearing()
-        {
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://worksheet.azurewebsites.net");
-            string json = await client.GetStringAsync("/api/work");
-            string[] workTitles = JsonConvert.DeserializeObject<string[]>(json);
-            workList.ItemsSource = workTitles;
-            base.OnAppearing();
         }
 
         // ViewListButton methods
@@ -81,7 +132,8 @@ namespace WorkSheetMobile
                 ViewListButton.Text = "Show unassigned works";
 
                 MarkCompleteButton.IsVisible = true;
-
+                AssignWorkButton.IsVisible = false;
+                
             }
             else if (ViewListButton.Text == "Show unassigned works")
             {
@@ -93,10 +145,11 @@ namespace WorkSheetMobile
                 ViewListButton.Text = "Show works in progress";
 
                 MarkCompleteButton.IsVisible = false;
+                AssignWorkButton.IsVisible = true;
             }
             
         }
-
+        // Markcompletebutton methods
         private async void MarkCompleteButton_Clicked(object sender, EventArgs e)
         {
             string WorkID = workList.SelectedItem?.ToString();            
@@ -132,6 +185,16 @@ namespace WorkSheetMobile
             {
                 await DisplayAlert("Save Failed!", "Sorry, couldn't get any data from database..", "OK");
             }
+        }
+
+        protected override async void OnAppearing()
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://worksheet.azurewebsites.net");
+            string json = await client.GetStringAsync("/api/work");
+            string[] workTitles = JsonConvert.DeserializeObject<string[]>(json);
+            workList.ItemsSource = workTitles;
+            base.OnAppearing();
         }
     }
 }

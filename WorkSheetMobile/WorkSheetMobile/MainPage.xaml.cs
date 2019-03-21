@@ -44,7 +44,7 @@ namespace WorkSheetMobile
 
         private async void ToTimesheetsButton_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new TimesheetList());
+            await Navigation.PushAsync(new TSList());
         }
 
         private async void LogOutButton_Clicked(object sender, EventArgs e)

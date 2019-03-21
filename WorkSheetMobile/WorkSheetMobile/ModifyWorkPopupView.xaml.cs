@@ -20,6 +20,7 @@ namespace WorkSheetMobile
 		{
 			InitializeComponent ();
             work = WorkID;
+                        
 		}
 
         private void DeadLinePicker_DateSelected(object sender, DateChangedEventArgs e)

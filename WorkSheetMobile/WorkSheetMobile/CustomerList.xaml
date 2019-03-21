@@ -15,10 +15,9 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout BackgroundColor="Bisque">
-            <Button x:Name="NewCustomerButton" Text="Add New Customer" Clicked="NewCustomerButton_Clicked"></Button>
+            
             <ListView x:Name="customerList" BackgroundColor="BlanchedAlmond"></ListView>
-            <Button x:Name="ModifyCustomerButton" Text="Modify Customer" IsEnabled="False" Clicked="ModifyCustomerButton_Clicked"></Button>
-            <Button x:Name="DeleteCustomerButton" Text="Delete Customer" IsEnabled="False" Clicked="DeleteCustomerButton_Clicked"></Button>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

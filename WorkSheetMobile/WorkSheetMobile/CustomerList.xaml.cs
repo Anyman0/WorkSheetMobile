@@ -19,30 +19,66 @@ namespace WorkSheetMobile
 		{
 			InitializeComponent ();
             customerList.ItemSelected += CustomerList_ItemSelected;
-		}
 
-        private void CustomerList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            ModifyCustomerButton.IsEnabled = true;
-            DeleteCustomerButton.IsEnabled = true;
+            //Toolbaritems created here
+            var AddNewCustomer = new ToolbarItem()
+            {
+                Text = "New",
+            };
+            AddNewCustomer.Clicked += AddNewCustomer_Clicked;
+            ToolbarItems.Add(AddNewCustomer);
+
+            var ModifyCustomer = new ToolbarItem()
+            {
+                Text = "Modify"
+            };
+            ToolbarItems.Add(ModifyCustomer);
+            ModifyCustomer.Clicked += ModifyCustomer_Clicked;
+
+            var DeleteCustomer = new ToolbarItem()
+            {
+                Text = "Delete",
+            };
+            ToolbarItems.Add(DeleteCustomer);
+            DeleteCustomer.Clicked += DeleteCustomer_Clicked;
         }
 
-        private async void NewCustomerButton_Clicked(object sender, EventArgs e)
+        private async void DeleteCustomer_Clicked(object sender, EventArgs e)
+        {
+            string CustID = customerList.SelectedItem?.ToString();
+            if (CustID == null)
+            {
+                await DisplayAlert("Whoopsie", "Choose a customer first.", "OK");
+            }
+            else
+            {
+                await PopupNavigation.PushAsync(new DeleteCustomerPopupView(CustID));
+            }
+        }
+
+        private async void ModifyCustomer_Clicked(object sender, EventArgs e)
+        {
+            string CustID = customerList.SelectedItem?.ToString();
+            if (CustID == null)
+            {
+                await DisplayAlert("Whoopsie", "Choose a customer first.", "OK");
+            }
+            else
+            {
+                await PopupNavigation.PushAsync(new ModifyCustomerPopupView(CustID));
+            }
+        }
+
+        private async void AddNewCustomer_Clicked(object sender, EventArgs e)
         {
             await PopupNavigation.PushAsync(new NewCustomerPopupView());
         }
 
-        private async void ModifyCustomerButton_Clicked(object sender, EventArgs e)
+        private void CustomerList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            string CustID = customerList.SelectedItem?.ToString();
-            await PopupNavigation.PushAsync(new ModifyCustomerPopupView(CustID));
+            
         }
-
-        private async void DeleteCustomerButton_Clicked(object sender, EventArgs e)
-        {
-            string CustID = customerList.SelectedItem?.ToString();
-            await PopupNavigation.PushAsync(new DeleteCustomerPopupView(CustID));
-        }
+                     
 
         protected override async void OnAppearing()
         {

@@ -17,10 +17,9 @@
     
     <ContentPage.Content>
         <StackLayout BackgroundColor="Bisque">
-            <Button x:Name="NewContractorButton" Text="Add New Contractor" Clicked="NewContractorButton_Clicked"></Button>
+            
             <ListView x:Name="contractorList" BackgroundColor="BlanchedAlmond"></ListView>
-            <Button x:Name="ModifyContractorButton" Text="Modify Contractor" IsEnabled="False" Clicked="ModifyContractorButton_Clicked"></Button>
-            <Button x:Name="DeleteContractorButton" Text="Delete Contractor" IsEnabled="False" Clicked="DeleteContractorButton_Clicked"></Button>
+           
         </StackLayout>
     </ContentPage.Content>
     

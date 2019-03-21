@@ -14,8 +14,8 @@ namespace WorkSheetBackend.Controllers
     public class TimesheetController : ApiController
     {
 
-        // TODO: GET-methods for timesheet data. Model.Operation - controller
-
+        
+        // Data for pickers
         public WorkModel GetAllPickerData(int id)
         {
             WorksheetEntities entities = new WorksheetEntities();
@@ -46,84 +46,83 @@ namespace WorkSheetBackend.Controllers
             }
            
         }
-
-        // Exploring with IDs
-        /*public string[] GetAllContractors(string chosenEntity)
+       
+       
+        // Method to get all completed work for timesheet-page
+        [HttpGet]
+        public List<string> TimeSheetList(int tsID)
         {
-            WorkModel data = new WorkModel();
             WorksheetEntities entities = new WorksheetEntities();
-            Contractor contr = (from c in entities.Contractors where (c.CompanyName == chosenEntity) select c).FirstOrDefault();
-
-            string[] allIds = (from e in entities.Timesheets where (e.Id_Contractor == contr.Id_Contractor) select e.Id_Customer + " " + e.Id_Employee + " " + e.Id_WorkAssignment).ToArray();
-
-            Timesheet chosenEntityData = (from c in entities.Timesheets where (contr.CompanyName == chosenEntity) select c).FirstOrDefault();
             
+            List<string> realList = new List<string>();           
 
-            return allIds;
-        }*/
+            tsID = 2;
 
-        // Get Model for chosen entity  TODO: FIX LISTING ISSUES!!
-        public WorkModel GetModel (string chosenEntity)
-        {
-            WorkModel model = new WorkModel();
-            WorksheetEntities entities = new WorksheetEntities();
-            WorkAssignment assignment = (from wa in entities.WorkAssignments where (wa.Title == chosenEntity) select wa).FirstOrDefault();
-            Employee employee = (from e in entities.Employees where (e.FirstName + " " + e.LastName == chosenEntity) select e).FirstOrDefault();
-            Contractor contractor = (from co in entities.Contractors where (co.CompanyName == chosenEntity) select co).FirstOrDefault();
-            string chosenId = chosenEntity;
-            int chosenWorkid = 0;
-            int chosenEmployeeId = 0;
-            int chosenContractorId = 0;
-
-            if (assignment != null)
-            {
-                assignment = (from wa in entities.WorkAssignments where (wa.Title == chosenEntity) select wa).FirstOrDefault();
-                chosenWorkid = assignment.Id_WorkAssignment;
-            }
-            else if (employee != null)
-            {
-                employee = (from e in entities.Employees where (e.FirstName + " " + e.LastName == chosenEntity) select e).FirstOrDefault();
-                chosenEmployeeId = employee.Id_Employee;
-            }
-            else if (contractor != null)
-            {
-                contractor = (from co in entities.Contractors where (co.CompanyName == chosenEntity) select co).FirstOrDefault();
-                chosenContractorId = contractor.Id_Contractor;
-            }
-
+            string[] sheetId = (from ts in entities.Timesheets where (ts.WorkComplete == true) select ts.Id_Contractor.ToString() + " " + ts.Id_Employee.ToString() + " " + ts.Id_WorkAssignment.ToString()).ToArray();
+                                                   
             try
             {
                 
-                Timesheet chosenEntityData = (from chd in entities.Timesheets where (chd.Id_WorkAssignment == chosenWorkid) || (chd.Id_Employee == chosenEmployeeId) || (chd.Id_Contractor == chosenContractorId) select chd).FirstOrDefault();
-                contractor = (from co in entities.Contractors where (co.Id_Contractor == chosenEntityData.Id_Contractor) select co).FirstOrDefault();
-                employee = (from e in entities.Employees where (e.Id_Employee == chosenEntityData.Id_Employee) select e).FirstOrDefault();
-                assignment = (from wa in entities.WorkAssignments where (wa.Id_WorkAssignment == chosenEntityData.Id_WorkAssignment) select wa).FirstOrDefault();               
-                string[] contr = (from con in entities.Contractors where (con.Id_Contractor == chosenEntityData.Id_Contractor) select con.CompanyName).ToArray();
-                string[] empl = (from e in entities.Employees where (e.Id_Employee == chosenEntityData.Id_Employee) select e.FirstName).ToArray();
-                string[] everyContractor = (from ec in entities.Timesheets where (ec.Id_Contractor == contractor.Id_Contractor) select contractor.CompanyName + " | " + employee.FirstName + " | " + assignment.Title).ToArray();
-               
-
-                WorkModel chosenEntityModel = new WorkModel()
+                
+                foreach (var item in sheetId)
                 {
+                    string[] data = item.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                    string contractor = data[0];
+                    string contr = (from c in entities.Contractors where (c.Id_Contractor.ToString() == contractor) select c.CompanyName).Single();
+                    string employee = data[1];
+                    string emp = (from e in entities.Employees where (e.Id_Employee.ToString() == employee) select e.FirstName + " " + e.LastName).Single();
+                    string workid = data[2];
+                    string work = (from w in entities.WorkAssignments where (w.Id_WorkAssignment.ToString() == workid) select w.Title).Single();
                     
-                    ContractorPickerData = everyContractor,
-                    ContractorName = contractor.CompanyName,
-                    FirstName = employee.FirstName + " " + employee.LastName,
-                    WorkTitle = assignment.Title,
-                    StartTime = chosenEntityData.StartTime.Value,
-                    StopTime = chosenEntityData.StopTime.Value,
-                    CountedHours = (chosenEntityData.StopTime.Value - chosenEntityData.StartTime.Value).TotalHours
-                };
+                    realList.Add(contr + " | " + emp + " | " + work);
+                }
 
-                return chosenEntityModel;
+            }            
 
-            }
-           
             finally
             {
                 entities.Dispose();
             }
-            
+           
+            return realList;
+        }
+
+        // Method to get same data as in timesheet mainpage, but for the chosen employee only
+        public List<string> GetChosenEmployee (string Employee)
+        {
+            WorksheetEntities entities = new WorksheetEntities();
+
+            string emplo = (from e in entities.Employees where (e.FirstName + " " + e.LastName == Employee) select e.Id_Employee.ToString()).Single();
+
+            List<string> employeeWork = new List<string>();
+
+            string[] sheet = (from ts in entities.Timesheets where (ts.Id_Employee.ToString() == emplo) select ts.Id_Contractor.ToString() + " " + ts.Id_Employee.ToString() + " " + ts.Id_WorkAssignment.ToString()).ToArray();
+
+            try
+            {
+
+
+                foreach (var item in sheet)
+                {
+                    string[] data = item.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                    string contractor = data[0];
+                    string contr = (from c in entities.Contractors where (c.Id_Contractor.ToString() == contractor) select c.CompanyName).Single();
+                    string employee = data[1];
+                    string emp = (from e in entities.Employees where (e.Id_Employee.ToString() == employee) select e.FirstName + " " + e.LastName).Single();
+                    string workid = data[2];
+                    string work = (from w in entities.WorkAssignments where (w.Id_WorkAssignment.ToString() == workid) select w.Title).Single();
+
+                    employeeWork.Add(contr + " | " + emp + " | " + work);
+                }
+
+            }
+
+            finally
+            {
+                entities.Dispose();
+            }
+
+            return employeeWork;
         }
 
     }

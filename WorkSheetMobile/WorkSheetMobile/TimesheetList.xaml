@@ -19,7 +19,7 @@
     
     <ContentPage.Content>
         <StackLayout BackgroundColor="Bisque">
-            
+
             <StackLayout BackgroundColor="Bisque">
                 <Label x:Name="ChosenEntityLabel"></Label>
                 <Label x:Name="ChosenEntityLabel1"></Label>

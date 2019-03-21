@@ -19,30 +19,66 @@ namespace WorkSheetMobile
 		{
 			InitializeComponent ();
             contractorList.ItemSelected += ContractorList_ItemSelected;
-		}
 
-        private void ContractorList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            ModifyContractorButton.IsEnabled = true;
-            DeleteContractorButton.IsEnabled = true;
+            //Toolbaritems created here
+            var AddNewContractor = new ToolbarItem()
+            {
+                Text = "New",
+            };
+            AddNewContractor.Clicked += AddNewContractor_Clicked;
+            ToolbarItems.Add(AddNewContractor);
+
+            var ModifyContractor = new ToolbarItem()
+            {
+                Text = "Modify"
+            };
+            ToolbarItems.Add(ModifyContractor);
+            ModifyContractor.Clicked += ModifyContractor_Clicked;
+
+            var DeleteContractor = new ToolbarItem()
+            {
+                Text = "Delete",
+            };
+            ToolbarItems.Add(DeleteContractor);
+            DeleteContractor.Clicked += DeleteContractor_Clicked;
         }
 
-        private async void NewContractorButton_Clicked(object sender, EventArgs e)
+        private async void DeleteContractor_Clicked(object sender, EventArgs e)
+        {
+            string ContractorId = contractorList.SelectedItem?.ToString();
+            if (ContractorId == null)
+            {
+                await DisplayAlert("Whoopsie", "Choose a contractor first.", "OK");
+            }
+            else
+            {
+                await PopupNavigation.PushAsync(new DeleteContractorPopupView(ContractorId));
+            }
+        }
+
+        private async void ModifyContractor_Clicked(object sender, EventArgs e)
+        {
+            string ContractorId = contractorList.SelectedItem?.ToString();
+            if (ContractorId == null)
+            {
+                await DisplayAlert("Whoopsie", "Choose a contractor first.", "OK");
+            }
+            else
+            {
+                await PopupNavigation.PushAsync(new ModifyContractorPopupView(ContractorId));
+            }
+        }
+
+        private async void AddNewContractor_Clicked(object sender, EventArgs e)
         {
             await PopupNavigation.PushAsync(new NewContractorPopupView());
         }
 
-        private async void ModifyContractorButton_Clicked(object sender, EventArgs e)
+        private void ContractorList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            string ContractorId = contractorList.SelectedItem?.ToString();
-            await PopupNavigation.PushAsync(new ModifyContractorPopupView(ContractorId));
+            
         }
-
-        private async void DeleteContractorButton_Clicked(object sender, EventArgs e)
-        {
-            string ContractorId = contractorList.SelectedItem?.ToString();
-            await PopupNavigation.PushAsync(new DeleteContractorPopupView(ContractorId));
-        }
+                
 
         protected override async void OnAppearing()
         {
