@@ -14,37 +14,37 @@ namespace WorkSheetBackend.Controllers
     public class TimesheetController : ApiController
     {
 
-        
-        // Data for pickers
-        public WorkModel GetAllPickerData(int id)
+               
+        // Gets all the data for the picker
+        public List<string[]> GetPickerData(int picker)
         {
             WorksheetEntities entities = new WorksheetEntities();
-            id = 1;
 
-            string[] workAssignments = null;
-            string[] employees = null;
-            string[] contractors = null;
+            List<string[]> pickerData = new List<string[]>();
+            string[] emp = { "Employees:---------- " };
+            string[] work = { "Workassignments:---------- " };
+            string[] cont = { "Contractors:---------- " };           
 
             try
             {
-                workAssignments = (from wa in entities.WorkAssignments where (wa.Active == true) select wa.Title).ToArray();
-                employees = (from e in entities.Employees where (e.Active == true) select e.FirstName + " " + e.LastName).ToArray();
-                contractors = (from co in entities.Contractors where (co.Active == true) select co.CompanyName).ToArray();
+                string[] workAssignments = (from wa in entities.WorkAssignments where (wa.Active == true) select wa.Title).ToArray();
+                string [] employees = (from e in entities.Employees where (e.Active == true) select e.FirstName + " " + e.LastName).ToArray();
+                string[] contractors = (from co in entities.Contractors where (co.Active == true) select co.CompanyName).ToArray();
 
-                WorkModel pickerData = new WorkModel()
-                {
-                    WorkPickerData = workAssignments,
-                    EmployeePickerData = employees,
-                    ContractorPickerData = contractors
-                };
-
-                return pickerData;
+                pickerData.Add(work);
+                pickerData.Add(workAssignments);
+                pickerData.Add(emp);
+                pickerData.Add(employees);
+                pickerData.Add(cont);
+                pickerData.Add(contractors);
+              
             }
             finally
             {
                 entities.Dispose();
             }
-           
+
+            return pickerData;
         }
        
        
@@ -87,16 +87,59 @@ namespace WorkSheetBackend.Controllers
             return realList;
         }
 
-        // Method to get same data as in timesheet mainpage, but for the chosen employee only
-        public List<string> GetChosenEmployee (string Employee)
+        // Method to get same data as in timesheet mainpage, but for the chosen entity only
+        public List<string> GetChosenEntity (string Entity)
         {
             WorksheetEntities entities = new WorksheetEntities();
+            string[] sheet = null;
+                        
 
-            string emplo = (from e in entities.Employees where (e.FirstName + " " + e.LastName == Employee) select e.Id_Employee.ToString()).Single();
+            string[] workAssignments = (from wa in entities.WorkAssignments where (wa.Active == true) select wa.Title).ToArray();
+            string[] employees = (from e in entities.Employees where (e.Active == true) select e.FirstName + " " + e.LastName).ToArray();
+            string[] contractors = (from cont in entities.Contractors where (cont.Active == true) select cont.CompanyName).ToArray();
+            List<string[]> empData = new List<string[]>();
+            List<string[]> contData = new List<string[]>();
+            List<string[]> WorkData = new List<string[]>();
+            WorkData.Add(workAssignments);
+            empData.Add(employees);
+            contData.Add(contractors);
 
-            List<string> employeeWork = new List<string>();
+            foreach (var item in empData)
+            {
+                foreach (var i in item)
+                {
+                    if (i.ToString() == Entity)
+                    {
+                        string emplo = (from e in entities.Employees where (e.FirstName + " " + e.LastName == Entity) select e.Id_Employee.ToString()).Single();
+                        sheet = (from ts in entities.Timesheets where (ts.Id_Employee.ToString() == emplo) select ts.Id_Contractor.ToString() + " " + ts.Id_Employee.ToString() + " " + ts.Id_WorkAssignment.ToString()).ToArray();
+                    }
+                }
+            }
+            foreach (var itemm in WorkData)
+            {
+                foreach (var it in itemm)
+                {
+                    if (it.ToString() == Entity)
+                    {
+                        string worka = (from w in entities.WorkAssignments where (w.Title == Entity) select w.Id_WorkAssignment.ToString()).Single();
+                        sheet = (from ts in entities.Timesheets where (ts.Id_WorkAssignment.ToString() == worka) select ts.Id_Contractor.ToString() + " " + ts.Id_Employee.ToString() + " " + ts.Id_WorkAssignment.ToString()).ToArray();
+                    }
+                }
+            }
+            foreach (var iten in contData)
+            {
+                foreach (var ite in iten)
+                {
+                    if (ite.ToString() == Entity)
+                    {
+                        string contra = (from c in entities.Contractors where (c.CompanyName == Entity) select c.Id_Contractor.ToString()).Single();
+                        sheet = (from ts in entities.Timesheets where (ts.Id_Contractor.ToString() == contra) select ts.Id_Contractor.ToString() + " " + ts.Id_Employee.ToString() + " " + ts.Id_WorkAssignment.ToString()).ToArray();
+                    }
+                }
+            }
+            
 
-            string[] sheet = (from ts in entities.Timesheets where (ts.Id_Employee.ToString() == emplo) select ts.Id_Contractor.ToString() + " " + ts.Id_Employee.ToString() + " " + ts.Id_WorkAssignment.ToString()).ToArray();
+            List<string> entityList = new List<string>();          
 
             try
             {
@@ -104,15 +147,15 @@ namespace WorkSheetBackend.Controllers
 
                 foreach (var item in sheet)
                 {
-                    string[] data = item.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-                    string contractor = data[0];
+                    string[] datas = item.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                    string contractor = datas[0];
                     string contr = (from c in entities.Contractors where (c.Id_Contractor.ToString() == contractor) select c.CompanyName).Single();
-                    string employee = data[1];
+                    string employee = datas[1];
                     string emp = (from e in entities.Employees where (e.Id_Employee.ToString() == employee) select e.FirstName + " " + e.LastName).Single();
-                    string workid = data[2];
+                    string workid = datas[2];
                     string work = (from w in entities.WorkAssignments where (w.Id_WorkAssignment.ToString() == workid) select w.Title).Single();
 
-                    employeeWork.Add(contr + " | " + emp + " | " + work);
+                    entityList.Add(contr + " | " + emp + " | " + work);
                 }
 
             }
@@ -122,7 +165,7 @@ namespace WorkSheetBackend.Controllers
                 entities.Dispose();
             }
 
-            return employeeWork;
+            return entityList;
         }
 
     }
