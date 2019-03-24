@@ -107,6 +107,7 @@ namespace WorkSheetBackend.Controllers
                         existing.PhoneNumber = model.PhoneNumber.ToString();
                         existing.EmailAddress = model.Email;
                         existing.LastModifiedAt = DateTime.Now;
+                        existing.EmployeePicture = model.Picture;
                     }
                     else
                     {
@@ -147,5 +148,7 @@ namespace WorkSheetBackend.Controllers
 
             return true;
         }
+
+       
     }
 }

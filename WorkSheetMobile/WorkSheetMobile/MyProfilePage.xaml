@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WorkSheetMobile.MyProfilePage" BackgroundColor="Bisque">
+    <ContentPage.Content>
+        
+        <StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Image x:Name="MyPicture" ></Image>
+                <Button x:Name="TakePictureButton" Text="Take a picture" Clicked="TakePictureButton_Clicked"></Button>
+            </StackLayout>
+            <Entry x:Name="FirstNameEntry" ></Entry>
+            <Entry x:Name="LastNameEntry" ></Entry>
+            <Entry x:Name="PhoheNumberEntry" Keyboard="Numeric" ></Entry>
+            <Entry x:Name="EmailEntry" ></Entry>
+            <Label x:Name="MyUserName" FontSize="Large" FontAttributes="Bold" ></Label>
+            <StackLayout Orientation="Horizontal">
+                <Entry x:Name="MyPWEntry" IsPassword="True" Placeholder="Change password" Focused="MyPWEntry_Focused" >
+                </Entry>
+                <Entry x:Name="NewPWEntry" IsPassword="True" Placeholder="New password" IsVisible="False"></Entry>
+                <Button x:Name="NewPWSaveButton" IsEnabled="False" Clicked="NewPWSaveButton_Clicked" WidthRequest="100" Text="Save"></Button>
+            </StackLayout>
+            <Button x:Name="SaveChangesButton" Text="Save changes" Clicked="SaveChangesButton_Clicked"></Button>
+        </StackLayout>
+            
+    </ContentPage.Content>
+</ContentPage>

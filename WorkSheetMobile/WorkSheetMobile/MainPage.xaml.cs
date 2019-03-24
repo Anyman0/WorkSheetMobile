@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -19,7 +20,7 @@ namespace WorkSheetMobile
         {
             InitializeComponent();
             Name = usrName;          
-            GetUsersName();
+            //GetUsersName();
         }
 
         private async void ToEmployeesButton_Clicked(object sender, EventArgs e)
@@ -56,16 +57,40 @@ namespace WorkSheetMobile
 
         public async void GetUsersName()
         {
-            HttpClient client = new HttpClient();
+            /*HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("https://worksheet.azurewebsites.net");
             string json = await client.GetStringAsync("/api/login?userName=" + Name);
             WorkModel ProfileInfo = JsonConvert.DeserializeObject<WorkModel>(json);
             WelcomeUserLabel.Text = "Welcome " +ProfileInfo.FirstName + " " + ProfileInfo.LastName + "!";
+            if (ProfileInfo.Picture != null)
+            {
+                byte[] photo = ProfileInfo.Picture;
+                Stream stream = new MemoryStream(photo);
+                ImageSource img = ImageSource.FromStream(() => stream);
+                ProfileImage.Source = img;
+            }*/
+            
         }
 
         protected override async void OnAppearing()
         {
-            
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://worksheet.azurewebsites.net");
+            string json = await client.GetStringAsync("/api/login?userName=" + Name);
+            WorkModel ProfileInfo = JsonConvert.DeserializeObject<WorkModel>(json);
+            WelcomeUserLabel.Text = "Welcome " + ProfileInfo.FirstName + " " + ProfileInfo.LastName + "!";
+            if (ProfileInfo.Picture != null)
+            {
+                byte[] photo = ProfileInfo.Picture;
+                Stream stream = new MemoryStream(photo);
+                ImageSource img = ImageSource.FromStream(() => stream);
+                ProfileImage.Source = img;
+            }
+        }
+
+        private async void MyProfileButton_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new MyProfilePage(Name));
         }
     }
 }

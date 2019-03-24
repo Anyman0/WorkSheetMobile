@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Android.Locations;
+using Plugin.CurrentActivity;
 
 namespace WorkSheetMobile.Droid
 {
@@ -19,7 +20,9 @@ namespace WorkSheetMobile.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
-            
+
+            CrossCurrentActivity.Current.Init(this, bundle);
+
             base.OnCreate(bundle);
 
             // Initiating Popups 
@@ -45,6 +48,11 @@ namespace WorkSheetMobile.Droid
             {
                 System.Diagnostics.Debug.WriteLine(ex.Message);
             }
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
+        {
+            Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
         public void OnLocationChanged(Location location)

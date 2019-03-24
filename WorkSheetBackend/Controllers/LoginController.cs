@@ -64,13 +64,17 @@ namespace WorkSheetBackend.Controllers
             {
                
                 Employee profile = (from p in entities.Employees where (p.Active == true) && (p.Username == userName) select p).FirstOrDefault();
+                string cont = (from c in entities.Contractors where (c.Id_Contractor == profile.Id_Contractor) select c.CompanyName).Single();
+
 
                 WorkModel loggedProfile = new WorkModel()
                 {
+                    ContractorName = cont,
                     FirstName = profile.FirstName,
                     LastName = profile.LastName,
                     PhoneNumber = int.Parse(profile.PhoneNumber),
                     Email = profile.EmailAddress,
+                    Picture = profile.EmployeePicture,
                     UserName = profile.Username
                 };
 
@@ -81,6 +85,57 @@ namespace WorkSheetBackend.Controllers
             {
                 entities.Dispose();
             }
+        }
+
+
+        [HttpPost]
+        public bool PostChanges(WorkModel model)
+        {
+            WorksheetEntities entities = new WorksheetEntities();
+
+            try
+            {
+                Employee MyProfile = (from ce in entities.Employees where (ce.Active == true) && (ce.FirstName + " " + ce.LastName == model.FirstName + " " + model.LastName) select ce).FirstOrDefault();
+                if (MyProfile == null)
+                {
+                    return false;
+                }
+                int employeeId = MyProfile.Id_Employee;
+                Employee existing = (from e in entities.Employees where (e.Id_Employee == employeeId) && (e.Active == true) select e).FirstOrDefault();
+                if (existing != null && model.Picture != null && model.Operation == "Save")
+                {
+                    existing.FirstName = model.FirstName;
+                    existing.LastName = model.LastName;
+                    existing.PhoneNumber = model.PhoneNumber.ToString();
+                    existing.EmailAddress = model.Email;
+                    existing.LastModifiedAt = DateTime.Now;                  
+                    existing.EmployeePicture = model.Picture;                   
+                }
+                else if (existing != null && model.Picture == null && model.Operation == "Save")
+                {
+                    existing.FirstName = model.FirstName;
+                    existing.LastName = model.LastName;
+                    existing.PhoneNumber = model.PhoneNumber.ToString();
+                    existing.EmailAddress = model.Email;
+                    existing.LastModifiedAt = DateTime.Now;
+                }
+                else if (existing != null && model.Operation == "SavePW")
+                {
+                    existing.Password = model.Password;
+                }
+
+                entities.SaveChanges();
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                entities.Dispose();
+            }
+
+            return true;
         }
 
     }

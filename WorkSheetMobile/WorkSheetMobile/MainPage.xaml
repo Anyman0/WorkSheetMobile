@@ -9,6 +9,10 @@
        
     <StackLayout>
         <Label x:Name="WelcomeUserLabel" FontAttributes="Bold" TextColor="Black" FontSize="Large" HorizontalOptions="Center"></Label>
+        <StackLayout Orientation="Horizontal">
+            <Image x:Name="ProfileImage"></Image>
+            <Button x:Name="MyProfileButton" Text="My Profile"  Clicked="MyProfileButton_Clicked"></Button>
+        </StackLayout>
         <Button x:Name="LogOutButton" Text="Logout" Clicked="LogOutButton_Clicked" ></Button>
         <StackLayout  VerticalOptions="EndAndExpand">
             <Button x:Name="ToEmployeesButton" Text="Employees" Clicked="ToEmployeesButton_Clicked"></Button>

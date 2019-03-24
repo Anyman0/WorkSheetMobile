@@ -25,6 +25,8 @@
         VerticalOptions="Center">
 
         <Label Text="Modify Employee" FontAttributes="Bold" FontSize="Large" HorizontalOptions="Center"></Label>
+        <Image x:Name="ProfilePicture"></Image>
+        <Button x:Name="GetPictureButton" Text="Take photo!" Clicked="GetPictureButton_Clicked"></Button>
         <Entry x:Name="FirstNameEntry"></Entry>
         <Entry x:Name="LastNameEntry"></Entry>
         <Entry x:Name="PhoneNumberEntry" Keyboard="Numeric"></Entry>

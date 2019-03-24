@@ -2,6 +2,7 @@
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -15,6 +16,7 @@ namespace WorkSheetMobile
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ModifyEmployeePopupView
 	{
+        byte[] image;
         string employeeId;
 		public ModifyEmployeePopupView (string chosenEmployee)
 		{
@@ -29,6 +31,7 @@ namespace WorkSheetMobile
                 WorkModel data = new WorkModel()
                 {
                     EmpOperation = "Modify",
+                    Picture = image,
                     FirstName = FirstNameEntry.Text,
                     LastName = LastNameEntry.Text,
                     PhoneNumber = int.Parse(PhoneNumberEntry.Text),
@@ -81,6 +84,27 @@ namespace WorkSheetMobile
                 string errorMessage = ex.GetType().Name + ": " + ex.Message;
                 FirstNameEntry.Text = errorMessage;
             }
+        }
+
+        private async void GetPictureButton_Clicked(object sender, EventArgs e)
+        {
+            var photo = await Plugin.Media.CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions() { });
+
+            if (photo != null)
+                ProfilePicture.Source = ImageSource.FromStream(() => { return photo.GetStream(); });
+
+            Stream s = photo.GetStream();          
+
+            if (s.Length > int.MaxValue)
+            {
+                throw new Exception("This stream is larger than the conversion algorithm can currently handle.");
+            }
+
+            using (var br = new BinaryReader(s))
+            {
+                image = br.ReadBytes((int)s.Length);
+            }
+
         }
     }
 }
