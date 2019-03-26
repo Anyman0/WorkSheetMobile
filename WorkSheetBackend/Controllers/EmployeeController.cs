@@ -11,25 +11,36 @@ namespace WorkSheetBackend.Controllers
 {
     public class EmployeeController : ApiController
     {       
-        public string[] GetAll()
+        public List<string> GetAll()
         {
             string[] employees = null;          
             WorksheetEntities entities = new WorksheetEntities();
+
+            List<string> empList = new List<string>();
+            employees = (from e in entities.Employees where (e.Active == true) select e.Id_Contractor + " " + e.Id_Employee).ToArray();
  
             try
-            {               
-                employees = (from e in entities.Employees where (e.Active == true) select e.FirstName + " " + e.LastName).ToArray();                                     
-            }
-            catch
             {
 
-            }            
+
+                foreach (var item in employees)
+                {
+                    string[] data = item.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                    string contractor = data[0];
+                    string contr = (from c in entities.Contractors where (c.Id_Contractor.ToString() == contractor) select c.CompanyName).Single();
+                    string employee = data[1];
+                    string emp = (from e in entities.Employees where (e.Id_Employee.ToString() == employee) select e.FirstName + " " + e.LastName).Single();                  
+
+                    empList.Add("Contractor: " + contr + " | Name: " + emp + " ( " + employee + " )" );
+                }
+
+            }
             finally
             {
                 entities.Dispose();
             }
 
-            return employees;
+            return empList;
         }
       
 
@@ -42,7 +53,7 @@ namespace WorkSheetBackend.Controllers
             {
                  
                 string chosenEmployee = employeeName;
-                Employee employee = (from e in entities.Employees where (e.Active == true) && (e.FirstName + " " + e.LastName == chosenEmployee) select e).FirstOrDefault();
+                Employee employee = (from e in entities.Employees where (e.Active == true) && (e.Id_Employee.ToString() == chosenEmployee) select e).FirstOrDefault();
 
                 WorkModel chosenEmployeeModel = new WorkModel()
                 {
@@ -93,13 +104,8 @@ namespace WorkSheetBackend.Controllers
                 else if (model.EmpOperation == "Modify")
                 {
 
-                    Employee chosenEmployee = (from ce in entities.Employees where (ce.Active == true) && (ce.FirstName + " " + ce.LastName == model.FirstName + " " + model.LastName) select ce).FirstOrDefault();
-                    if (chosenEmployee == null)
-                    {
-                        return false;
-                    }
-                    int employeeId = chosenEmployee.Id_Employee;
-                    Employee existing = (from e in entities.Employees where (e.Id_Employee == employeeId) && (e.Active == true) select e).FirstOrDefault();
+                    
+                    Employee existing = (from e in entities.Employees where (e.Id_Employee == model.EmployeeId) && (e.Active == true) select e).FirstOrDefault();
                     if (existing != null)
                     {
                         existing.FirstName = model.FirstName;
@@ -118,13 +124,8 @@ namespace WorkSheetBackend.Controllers
                 // Delete chosen work
                 else if (model.EmpOperation == "Delete")
                 {
-                    Employee chosenEmployee = (from ce in entities.Employees where (ce.FirstName + " " + ce.LastName == model.FirstName) select ce).FirstOrDefault();
-                    if (chosenEmployee == null)
-                    {
-                        return false;
-                    }
-                    int employeeId = chosenEmployee.Id_Employee;
-                    Employee existing = (from e in entities.Employees where (e.Id_Employee == employeeId) select e).FirstOrDefault();
+                    
+                    Employee existing = (from e in entities.Employees where (e.Id_Employee == model.EmployeeId) select e).FirstOrDefault();
                     if (existing != null)
                     {
                         entities.Employees.Remove(existing);

@@ -7,7 +7,10 @@
         <StackLayout>
             <StackLayout Orientation="Horizontal">
                 <Image x:Name="MyPicture" ></Image>
-                <Button x:Name="TakePictureButton" Text="Take a picture" Clicked="TakePictureButton_Clicked"></Button>
+                <StackLayout VerticalOptions="Center">
+                    <Button x:Name="TakePictureButton" Text="Take a picture" Clicked="TakePictureButton_Clicked"></Button>
+                    <Button x:Name="GetPictureButton" Text="Get a picture"  Clicked="GetPictureButton_Clicked"></Button>
+                </StackLayout>
             </StackLayout>
             <Entry x:Name="FirstNameEntry" ></Entry>
             <Entry x:Name="LastNameEntry" ></Entry>

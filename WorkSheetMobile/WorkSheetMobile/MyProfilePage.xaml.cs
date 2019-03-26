@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -185,6 +187,31 @@ namespace WorkSheetMobile
             catch
             {
                 await DisplayAlert("Whoops!", "Couldnt retrieve data from database...", "OK");
+            }
+        }
+
+        private async void GetPictureButton_Clicked(object sender, EventArgs e)
+        {
+            await CrossMedia.Current.Initialize();
+
+            var mediaOptions = new PickMediaOptions()
+            {
+                PhotoSize = PhotoSize.MaxWidthHeight
+            };
+
+            var selectedImage = await CrossMedia.Current.PickPhotoAsync(mediaOptions);
+            MyPicture.Source = ImageSource.FromStream(() => selectedImage.GetStream());
+
+            Stream s = selectedImage.GetStream();
+
+            if (s.Length > int.MaxValue)
+            {
+                throw new Exception("This stream is larger than the conversion algorithm can currently handle.");
+            }
+
+            using (var br = new BinaryReader(s))
+            {
+                image = br.ReadBytes((int)s.Length);
             }
         }
     }

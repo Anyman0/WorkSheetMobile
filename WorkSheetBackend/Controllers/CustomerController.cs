@@ -46,7 +46,8 @@ namespace WorkSheetBackend.Controllers
                     CustomerName = customer.CustomerName,
                     ContactPerson = customer.ContactPerson,
                     CustomerPhoneNumber = customer.PhoneNumber,
-                    CustomerEmail = customer.EmailAddress
+                    CustomerEmail = customer.EmailAddress,
+                    CustomerId = customer.Id_Customer
                 };
 
                 return chosenCustomerModel;
@@ -86,13 +87,8 @@ namespace WorkSheetBackend.Controllers
                 // Modify chosen customer
                 else if (model.CustOperation == "Modify")
                 {
-                    Customer customer = (from c in entities.Customers where (c.Active == true) && (c.CustomerName == model.CustomerName) select c).FirstOrDefault();
-                    if (customer == null)
-                    {
-                        return false;
-                    }
-                    int customerId = customer.Id_Customer;
-                    Customer existing = (from c in entities.Customers where (c.Id_Customer == customerId) && (c.Active == true) select c).FirstOrDefault();
+                    
+                    Customer existing = (from c in entities.Customers where (c.Id_Customer == model.CustomerId) && (c.Active == true) select c).FirstOrDefault();
                     if (existing != null)
                     {
                         existing.CustomerName = model.CustomerName;

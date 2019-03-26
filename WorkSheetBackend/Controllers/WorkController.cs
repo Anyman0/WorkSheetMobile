@@ -19,7 +19,7 @@ namespace WorkSheetBackend.Controllers
 
             try
             {
-                WorkAssignments = (from wa in entities.WorkAssignments where (wa.Active == true) && (wa.InProgressAt == null) select wa.Title).ToArray();
+                WorkAssignments = (from wa in entities.WorkAssignments where (wa.Active == true) && (wa.InProgressAt == null) select wa.Title + " Deadline: " + wa.Deadline + " ( " + wa.Id_WorkAssignment + " )").ToArray();
             }
             finally
             {
@@ -40,7 +40,7 @@ namespace WorkSheetBackend.Controllers
                 
                 string[] chosenWorkData = (from cw in entities.WorkAssignments
                                            where (cw.Active == true) && (cw.InProgressAt != null) && (cw.Completed != true)
-                                           select cw.Title + " | Started at:  " + cw.InProgressAt).ToArray();
+                                           select cw.Title + " | Started at:  " + cw.InProgressAt + " ( " + cw.Id_WorkAssignment + " )").ToArray();
 
                 return chosenWorkData;
             }
@@ -62,7 +62,7 @@ namespace WorkSheetBackend.Controllers
             {
                 string chosenWorkId = workName;
                 WorkAssignment chosenWorkData = (from cw in entities.WorkAssignments
-                                           where (cw.Active == true) && (cw.Title == chosenWorkId)
+                                           where (cw.Active == true) && (cw.Id_WorkAssignment.ToString() == chosenWorkId)
                                            select cw).FirstOrDefault();
 
                 WorkModel chosenWorkModel = new WorkModel()
@@ -89,7 +89,7 @@ namespace WorkSheetBackend.Controllers
             WorksheetEntities entities = new WorksheetEntities();
 
             Customer customer = (from cu in entities.Customers where (cu.Active == true) && (cu.CustomerName == model.CustomerName) select cu).FirstOrDefault();
-
+            
             try
             {
                 // Save chosen work
@@ -111,13 +111,8 @@ namespace WorkSheetBackend.Controllers
                 // Modify chosen work
                 else if (model.Operation == "Modify")
                 {
-                    WorkAssignment assignment = (from wa in entities.WorkAssignments where (wa.Active == true) && (wa.Title == model.WorkTitle) select wa).FirstOrDefault();
-                    if (assignment == null)
-                    {
-                        return false;
-                    }
-                    int workId = assignment.Id_WorkAssignment;
-                    WorkAssignment existing = (from wa in entities.WorkAssignments where (wa.Id_WorkAssignment == workId) && (wa.Active == true) select wa).FirstOrDefault();
+                    
+                    WorkAssignment existing = (from wa in entities.WorkAssignments where (wa.Id_WorkAssignment == model.WorkID) && (wa.Active == true) select wa).FirstOrDefault();
                     if (existing != null)
                     {
                         existing.Title = model.WorkTitle;
@@ -134,13 +129,8 @@ namespace WorkSheetBackend.Controllers
                 // Delete chosen work
                 else if (model.Operation == "Delete")
                 {
-                    WorkAssignment assignment = (from wa in entities.WorkAssignments where (wa.Title == model.WorkTitle) select wa).FirstOrDefault();
-                    if (assignment == null)
-                    {
-                        return false;
-                    }
-                    int workId = assignment.Id_WorkAssignment;
-                    WorkAssignment existing = (from wa in entities.WorkAssignments where (wa.Id_WorkAssignment == workId) select wa).FirstOrDefault();
+                   
+                    WorkAssignment existing = (from wa in entities.WorkAssignments where (wa.Id_WorkAssignment == model.WorkID) select wa).FirstOrDefault();
                     if (existing != null)
                     {
                         entities.WorkAssignments.Remove(existing);
@@ -155,13 +145,13 @@ namespace WorkSheetBackend.Controllers
                 else if(model.Operation == "Assign")
                 {
                     
-                    WorkAssignment assignment = (from wa in entities.WorkAssignments where (wa.Title == model.WorkTitle) && (wa.Active == true) && (wa.InProgress == true) select wa).FirstOrDefault();
+                    WorkAssignment assignment = (from wa in entities.WorkAssignments where (wa.Id_WorkAssignment == model.WorkID) && (wa.Active == true) && (wa.InProgress == true) select wa).FirstOrDefault();
                     if (assignment == null)
                     {
                         return false;
                     }
 
-                    Employee emp = (from e in entities.Employees where (e.FirstName + " " + e.LastName == model.FirstName) select e).FirstOrDefault();
+                    Employee emp = (from e in entities.Employees where (e.Id_Employee == model.EmployeeId) select e).FirstOrDefault();
                     if (emp == null)
                     {
                         return false;
@@ -190,7 +180,7 @@ namespace WorkSheetBackend.Controllers
 
                 else if(model.Operation == "MarkComplete")
                 {
-                    WorkAssignment assignment = (from wa in entities.WorkAssignments where (wa.Title + " | Started at:  " + wa.InProgressAt == model.WorkTitle) && (wa.Active == true) && (wa.InProgress == true) && (wa.InProgressAt != null) select wa).FirstOrDefault();
+                    WorkAssignment assignment = (from wa in entities.WorkAssignments where (wa.Id_WorkAssignment == model.WorkID) && (wa.Active == true) && (wa.InProgress == true) && (wa.InProgressAt != null) select wa).FirstOrDefault();
                     if (assignment == null)
                     {
                         return false;

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="WorkSheetDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="WorkSheetDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Contractors">
           <Key>
             <PropertyRef Name="Id_Contractor" />
@@ -18,7 +18,6 @@
           <Property Name="HourlyRate" Type="float" />
           <Property Name="CreatedAt" Type="datetime" />
           <Property Name="LastModifiedAt" Type="datetime" />
-          <Property Name="DeletedAt" Type="datetime" />
           <Property Name="Active" Type="bit" />
         </EntityType>
         <EntityType Name="Customers">
@@ -32,7 +31,6 @@
           <Property Name="EmailAddress" Type="nvarchar" MaxLength="100" />
           <Property Name="CreatedAt" Type="datetime" />
           <Property Name="LastModifiedAt" Type="datetime" />
-          <Property Name="DeletedAt" Type="datetime" />
           <Property Name="Active" Type="bit" />
         </EntityType>
         <EntityType Name="Employees">
@@ -48,7 +46,6 @@
           <Property Name="EmployeeReferences" Type="nvarchar" MaxLength="2000" />
           <Property Name="CreatedAt" Type="datetime" />
           <Property Name="LastModifiedAt" Type="datetime" />
-          <Property Name="DeletedAt" Type="datetime" />
           <Property Name="Active" Type="bit" />
           <Property Name="EmployeePicture" Type="varbinary(max)" />
           <Property Name="Username" Type="nvarchar" MaxLength="50" />
@@ -69,7 +66,6 @@
           <Property Name="WorkComplete" Type="bit" />
           <Property Name="CreatedAt" Type="datetime" />
           <Property Name="LastModifiedAt" Type="datetime" />
-          <Property Name="DeletedAt" Type="datetime" />
           <Property Name="Active" Type="bit" />
         </EntityType>
         <EntityType Name="WorkAssignments">
@@ -87,7 +83,6 @@
           <Property Name="CompletedAt" Type="datetime" />
           <Property Name="CreatedAt" Type="datetime" />
           <Property Name="LastModifiedAt" Type="datetime" />
-          <Property Name="DeletedAt" Type="datetime" />
           <Property Name="Active" Type="bit" />
         </EntityType>
         <Association Name="FK_Employees_Contractors">
@@ -193,7 +188,8 @@
             <End Role="WorkAssignments" EntitySet="WorkAssignments" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WorkSheetDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -210,7 +206,6 @@
           <Property Name="HourlyRate" Type="Double" />
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
-          <Property Name="DeletedAt" Type="DateTime" Precision="3" />
           <Property Name="Active" Type="Boolean" />
           <NavigationProperty Name="Employees" Relationship="Self.FK_Employees_Contractors" FromRole="Contractors" ToRole="Employees" />
           <NavigationProperty Name="Timesheets" Relationship="Self.FK_Timesheets_Contractors" FromRole="Contractors" ToRole="Timesheets" />
@@ -226,7 +221,6 @@
           <Property Name="EmailAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
-          <Property Name="DeletedAt" Type="DateTime" Precision="3" />
           <Property Name="Active" Type="Boolean" />
           <NavigationProperty Name="Timesheets" Relationship="Self.FK_Timesheets_Customers" FromRole="Customers" ToRole="Timesheets" />
           <NavigationProperty Name="WorkAssignments" Relationship="Self.FK_WorkAssignments_Customers" FromRole="Customers" ToRole="WorkAssignments" />
@@ -244,13 +238,12 @@
           <Property Name="EmployeeReferences" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
-          <Property Name="DeletedAt" Type="DateTime" Precision="3" />
           <Property Name="Active" Type="Boolean" />
           <Property Name="EmployeePicture" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="Contractor" Relationship="Self.FK_Employees_Contractors" FromRole="Employees" ToRole="Contractors" />
-          <NavigationProperty Name="Timesheets" Relationship="Self.FK_Timesheets_Employees" FromRole="Employees" ToRole="Timesheets" />
           <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Contractor" Relationship="Self.FK_Employees_Contractors" FromRole="Employees" ToRole="Contractors" />
+          <NavigationProperty Name="Timesheets" Relationship="Self.FK_Timesheets_Employees" FromRole="Employees" ToRole="Timesheets" />
         </EntityType>
         <EntityType Name="Timesheet">
           <Key>
@@ -267,7 +260,6 @@
           <Property Name="WorkComplete" Type="Boolean" />
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
-          <Property Name="DeletedAt" Type="DateTime" Precision="3" />
           <Property Name="Active" Type="Boolean" />
           <NavigationProperty Name="Contractor" Relationship="Self.FK_Timesheets_Contractors" FromRole="Timesheets" ToRole="Contractors" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_Timesheets_Customers" FromRole="Timesheets" ToRole="Customers" />
@@ -289,7 +281,6 @@
           <Property Name="CompletedAt" Type="DateTime" Precision="3" />
           <Property Name="CreatedAt" Type="DateTime" Precision="3" />
           <Property Name="LastModifiedAt" Type="DateTime" Precision="3" />
-          <Property Name="DeletedAt" Type="DateTime" Precision="3" />
           <Property Name="Active" Type="Boolean" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_WorkAssignments_Customers" FromRole="WorkAssignments" ToRole="Customers" />
           <NavigationProperty Name="Timesheets" Relationship="Self.FK_Timesheets_WorkAssignments" FromRole="WorkAssignments" ToRole="Timesheets" />
@@ -415,7 +406,6 @@
                 <ScalarProperty Name="HourlyRate" ColumnName="HourlyRate" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
                 <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
-                <ScalarProperty Name="DeletedAt" ColumnName="DeletedAt" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -430,7 +420,6 @@
                 <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
                 <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
-                <ScalarProperty Name="DeletedAt" ColumnName="DeletedAt" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -438,8 +427,6 @@
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="WorkSheetDBModel.Employee">
               <MappingFragment StoreEntitySet="Employees">
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Id_Employee" ColumnName="Id_Employee" />
                 <ScalarProperty Name="Id_Contractor" ColumnName="Id_Contractor" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
@@ -449,9 +436,10 @@
                 <ScalarProperty Name="EmployeeReferences" ColumnName="EmployeeReferences" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
                 <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
-                <ScalarProperty Name="DeletedAt" ColumnName="DeletedAt" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="EmployeePicture" ColumnName="EmployeePicture" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -469,7 +457,6 @@
                 <ScalarProperty Name="WorkComplete" ColumnName="WorkComplete" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
                 <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
-                <ScalarProperty Name="DeletedAt" ColumnName="DeletedAt" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -488,7 +475,6 @@
                 <ScalarProperty Name="CompletedAt" ColumnName="CompletedAt" />
                 <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
                 <ScalarProperty Name="LastModifiedAt" ColumnName="LastModifiedAt" />
-                <ScalarProperty Name="DeletedAt" ColumnName="DeletedAt" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
               </MappingFragment>
             </EntityTypeMapping>

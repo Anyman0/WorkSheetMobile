@@ -15,11 +15,12 @@ namespace WorkSheetMobile
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ModifyCustomerPopupView
 	{
-        public string customerID;
+        public string customerName;
+        public int customerID;
 		public ModifyCustomerPopupView (string CustID)
 		{
 			InitializeComponent ();
-            customerID = CustID;
+            customerName = CustID;
 		}
 
         private async void SaveChanges_Clicked(object sender, EventArgs e)
@@ -32,7 +33,8 @@ namespace WorkSheetMobile
                     CustomerName = CustomerNameEntry.Text,
                     ContactPerson = ContactPersonEntry.Text,
                     CustomerPhoneNumber = PhoneNumberEntry.Text,
-                    CustomerEmail = EmailEntry.Text
+                    CustomerEmail = EmailEntry.Text,
+                    CustomerId = customerID
                 };
 
                 HttpClient client = new HttpClient();
@@ -69,12 +71,13 @@ namespace WorkSheetMobile
             {
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri("https://worksheet.azurewebsites.net");
-                string json = await client.GetStringAsync("/api/customer?customerName=" + customerID);
+                string json = await client.GetStringAsync("/api/customer?customerName=" + customerName);
                 WorkModel chosenCustomerModel = JsonConvert.DeserializeObject<WorkModel>(json);
                 CustomerNameEntry.Text = chosenCustomerModel.CustomerName;
                 ContactPersonEntry.Text = chosenCustomerModel.ContactPerson;
                 PhoneNumberEntry.Text = chosenCustomerModel.CustomerPhoneNumber;
                 EmailEntry.Text = chosenCustomerModel.CustomerEmail;
+                customerID = chosenCustomerModel.CustomerId;
             }
             catch (Exception ex)
             {

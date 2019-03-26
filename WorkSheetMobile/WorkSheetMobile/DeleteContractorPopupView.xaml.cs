@@ -16,6 +16,7 @@ namespace WorkSheetMobile
 	public partial class DeleteContractorPopupView
 	{
         public string contractorId;
+        public int contID;
 		public DeleteContractorPopupView (string ContractorId)
 		{
 			InitializeComponent ();
@@ -29,7 +30,7 @@ namespace WorkSheetMobile
                 WorkModel data = new WorkModel()
                 {
                     ContOperation = "Delete",
-                    ContractorName = ContractorNameLabel.Text
+                    ContractorId = contID
                 };
 
                 HttpClient client = new HttpClient();
@@ -69,6 +70,7 @@ namespace WorkSheetMobile
                 WorkModel chosenContractorModel = JsonConvert.DeserializeObject<WorkModel>(json);
                 ContractorNameLabel.Text = chosenContractorModel.ContractorName;
                 ContactPersonLabel.Text = chosenContractorModel.ContractorContactPerson;
+                contID = chosenContractorModel.ContractorId;
             }
             catch (Exception ex)
             {

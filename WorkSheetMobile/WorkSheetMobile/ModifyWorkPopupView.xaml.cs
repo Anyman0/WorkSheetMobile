@@ -41,6 +41,7 @@ namespace WorkSheetMobile
                     WorkTitle = TitleEntry.Text,
                     Description = DescriptionEntry.Text,
                     Deadline = DeadLinePicker.Date,
+                    WorkID = int.Parse(work)
                 };
 
                 HttpClient client = new HttpClient();

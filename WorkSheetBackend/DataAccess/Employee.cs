@@ -29,7 +29,6 @@ namespace WorkSheetBackend.DataAccess
         public string EmployeeReferences { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public Nullable<System.DateTime> LastModifiedAt { get; set; }
-        public Nullable<System.DateTime> DeletedAt { get; set; }
         public Nullable<bool> Active { get; set; }
         public byte[] EmployeePicture { get; set; }
         public string Username { get; set; }

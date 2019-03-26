@@ -49,51 +49,40 @@ namespace WorkSheetMobile
         private async void DeleteWork_Clicked(object sender, EventArgs e)
         {
             string WorkID = workList.SelectedItem?.ToString();
-            string workid = null;
 
-            if (WorkID != null)
-            {
-                string[] work = WorkID.Split(new string[] { " | " }, StringSplitOptions.RemoveEmptyEntries);
-                workid = work[0];
-            }
+            string[] work = WorkID.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            int works = work.Count();
+            string workid = work[works - 2];
+          
 
-            if (WorkID == null)
+            if (workid == null)
             {
                 await DisplayAlert("Whoopsie", "Choose a work first.", "OK");
             }
-            else if (ViewListButton.Text == "Show unassigned works")
+            else
             {
                 await PopupNavigation.PushAsync(new DeleteWorkPopupView(workid));
             }
-            else
-            {
-                await PopupNavigation.PushAsync(new DeleteWorkPopupView(WorkID));
-            }
+           
         }
 
         private async void ModifyWork_Clicked(object sender, EventArgs e)
         {
             string WorkID = workList.SelectedItem?.ToString();
-            string workid = null;
-
-            if (WorkID != null)
-            {
-                string[] work = WorkID.Split(new string[] { " | " }, StringSplitOptions.RemoveEmptyEntries);
-                workid = work[0];
-            }
-
-            if (WorkID == null)
+                       
+            string[] work = WorkID.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            int works = work.Count();
+            string workid = work[works - 2];
+            
+            if (workid == null)
             {
                 await DisplayAlert("Whoopsie", "Choose a work first.", "OK");
             }
-            else if (ViewListButton.Text == "Show unassigned works" && WorkID != null)
+
+            else
             {                
                 await PopupNavigation.PushAsync(new ModifyWorkPopupView(workid));
-            }
-            else
-            {
-                await PopupNavigation.PushAsync(new ModifyWorkPopupView(WorkID));
-            }
+            }           
             
         }
 
@@ -115,7 +104,12 @@ namespace WorkSheetMobile
         private async void AssignWorkButton_Clicked(object sender, EventArgs e)
         {
             string WorkID = workList.SelectedItem?.ToString();
-            await PopupNavigation.PushAsync(new AssignWorkPopupView(WorkID));
+
+            string[] work = WorkID.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            int works = work.Count();
+            string workid = work[works - 2];
+
+            await PopupNavigation.PushAsync(new AssignWorkPopupView(workid));
         }
 
         // ViewListButton methods
@@ -152,13 +146,18 @@ namespace WorkSheetMobile
         // Markcompletebutton methods
         private async void MarkCompleteButton_Clicked(object sender, EventArgs e)
         {
-            string WorkID = workList.SelectedItem?.ToString();            
+            string WorkID = workList.SelectedItem?.ToString();
+
+            string[] work = WorkID.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            int works = work.Count();
+            string workid = work[works - 2];
+
             try
             {
                 WorkModel data = new WorkModel()
                 {
                     Operation = "MarkComplete",
-                    WorkTitle = WorkID                  
+                    WorkID = int.Parse(workid)                 
                 };
 
                 HttpClient client = new HttpClient();

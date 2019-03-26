@@ -64,7 +64,11 @@ namespace WorkSheetMobile
         //Toolbaritem OnClicks
         private async void DeleteEmployee_Clicked(object sender, EventArgs e)
         {
-            string chosenEmployee = employeeList.SelectedItem?.ToString();
+            string chosen = employeeList.SelectedItem?.ToString();
+            string[] employee = chosen.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            int empID = employee.Count();
+            string chosenEmployee = employee[empID - 2];
+
             if (chosenEmployee == null)
             {
                 await DisplayAlert("Whoopsie", "Choose an employee first.", "OK");
@@ -77,7 +81,11 @@ namespace WorkSheetMobile
 
         private async void ModifyEmployee_Clicked(object sender, EventArgs e)
         {
-            string chosenEmployee = employeeList.SelectedItem?.ToString();
+            string chosen = employeeList.SelectedItem?.ToString();           
+            string[] employee = chosen.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            int empID = employee.Count();
+            string chosenEmployee = employee[empID - 2];          
+
             if (chosenEmployee == null)
             {
                 await DisplayAlert("Whoopsie", "Choose an employee first.", "OK");
@@ -105,8 +113,8 @@ namespace WorkSheetMobile
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("https://worksheet.azurewebsites.net");
             string json = await client.GetStringAsync("/api/employee");
-            string[] employees = JsonConvert.DeserializeObject<string[]>(json);
-            employeeList.ItemsSource = employees;
+            List<string> employees = JsonConvert.DeserializeObject<List<string>>(json);
+            employeeList.ItemsSource = employees;           
 
             base.OnAppearing();
         }

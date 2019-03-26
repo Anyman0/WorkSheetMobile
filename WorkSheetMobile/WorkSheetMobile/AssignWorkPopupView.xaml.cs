@@ -24,13 +24,19 @@ namespace WorkSheetMobile
 
         private async void AssignWorkButton_Clicked(object sender, EventArgs e)
         {
+            string emplo = EmployeePicker.SelectedItem?.ToString();
+
+            string[] emp = emplo.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            int emps = emp.Count();
+            string employeeid = emp[emps - 2]; 
+
             try
             {
                 WorkModel data = new WorkModel()
                 {
                     Operation = "Assign",
-                    WorkTitle = TitleLabel.Text,
-                    FirstName = EmployeePicker.SelectedItem.ToString()
+                    WorkID = int.Parse(workId),
+                    EmployeeId = int.Parse(employeeid)
                 };
 
                 HttpClient client = new HttpClient();

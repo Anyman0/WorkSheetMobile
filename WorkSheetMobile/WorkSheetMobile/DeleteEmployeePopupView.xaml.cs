@@ -29,7 +29,7 @@ namespace WorkSheetMobile
                 WorkModel data = new WorkModel()
                 {
                     EmpOperation = "Delete",
-                    FirstName = EmployeeNameLabel.Text,
+                    EmployeeId = int.Parse(employeeId)
                 };
 
                 HttpClient client = new HttpClient();

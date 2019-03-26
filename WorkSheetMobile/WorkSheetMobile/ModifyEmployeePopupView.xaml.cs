@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
@@ -35,9 +37,10 @@ namespace WorkSheetMobile
                     FirstName = FirstNameEntry.Text,
                     LastName = LastNameEntry.Text,
                     PhoneNumber = int.Parse(PhoneNumberEntry.Text),
-                    Email = EmailEntry.Text
+                    Email = EmailEntry.Text,
+                    EmployeeId = int.Parse(employeeId)
                 };
-
+               
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri("https://worksheet.azurewebsites.net");
                 string input = JsonConvert.SerializeObject(data);
@@ -85,15 +88,21 @@ namespace WorkSheetMobile
                 FirstNameEntry.Text = errorMessage;
             }
         }
-
+        // Getting photo from phones photogallery
         private async void GetPictureButton_Clicked(object sender, EventArgs e)
         {
-            var photo = await Plugin.Media.CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions() { });
+                       
+            await CrossMedia.Current.Initialize();
 
-            if (photo != null)
-                ProfilePicture.Source = ImageSource.FromStream(() => { return photo.GetStream(); });
+            var mediaOptions = new PickMediaOptions()
+            {
+                PhotoSize = PhotoSize.MaxWidthHeight
+            };
 
-            Stream s = photo.GetStream();          
+            var selectedImage = await CrossMedia.Current.PickPhotoAsync(mediaOptions);
+            ProfilePicture.Source = ImageSource.FromStream(() => selectedImage.GetStream());
+
+            Stream s = selectedImage.GetStream();
 
             if (s.Length > int.MaxValue)
             {
@@ -104,7 +113,6 @@ namespace WorkSheetMobile
             {
                 image = br.ReadBytes((int)s.Length);
             }
-
         }
     }
 }

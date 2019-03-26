@@ -74,7 +74,7 @@ namespace WorkSheetBackend.Controllers
                     string workid = data[2];
                     string work = (from w in entities.WorkAssignments where (w.Id_WorkAssignment.ToString() == workid) select w.Title).Single();
                     
-                    realList.Add(contr + " | " + emp + " | " + work);
+                    realList.Add(contr + " | " + emp + " | " + work + " " + "( " + workid + " )");
                 }
 
             }            
@@ -155,7 +155,7 @@ namespace WorkSheetBackend.Controllers
                     string workid = datas[2];
                     string work = (from w in entities.WorkAssignments where (w.Id_WorkAssignment.ToString() == workid) select w.Title).Single();
 
-                    entityList.Add(contr + " | " + emp + " | " + work);
+                    entityList.Add(contr + " | " + emp + " | " + work + " " + "( " + workid + " )");
                 }
 
             }
@@ -168,5 +168,35 @@ namespace WorkSheetBackend.Controllers
             return entityList;
         }
 
+
+        public WorkModel GetDetailModel(string Details)
+        {
+            WorksheetEntities entities = new WorksheetEntities();
+
+            string[] Sheet = Details.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);                     
+            int count = Sheet.Count();
+            string workid = Sheet[count - 2];
+           
+            Timesheet sheet = (from ts in entities.Timesheets where (ts.Id_WorkAssignment.ToString() == workid) select ts).FirstOrDefault();
+
+            string cont = (from con in entities.Contractors where (con.Id_Contractor == sheet.Id_Contractor) select con.CompanyName).Single();
+            string cust = (from c in entities.Customers where (c.Id_Customer == sheet.Id_Customer) select c.CustomerName).Single();
+            string work = (from co in entities.WorkAssignments where (co.Id_WorkAssignment == sheet.Id_WorkAssignment) select co.Title).Single();
+            string emp = (from e in entities.Employees where (e.Id_Employee == sheet.Id_Employee) select e.FirstName + " " + e.LastName).Single();
+            double workTime = (sheet.StopTime.Value - sheet.StartTime.Value).TotalHours;
+            string comments = (from ct in entities.Timesheets where (ct.Id_Timesheet == sheet.Id_Timesheet) select ct.Comments).Single();
+
+            WorkModel details = new WorkModel()
+            {
+                CustomerName = cust,
+                ContractorName = cont,
+                FirstName = emp,
+                WorkTitle = work,
+                CountedHours = workTime,
+                Comments = comments
+            };
+
+            return details;
+        }
     }
 }

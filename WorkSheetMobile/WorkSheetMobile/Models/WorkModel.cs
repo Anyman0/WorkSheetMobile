@@ -12,6 +12,7 @@ namespace WorkSheetMobile.Models
         public string WorkTitle { get; set; } 
         public string Description { get; set; }
         public DateTime Deadline { get; set; }
+        public int WorkID { get; set; } 
 
         // Employee fields
         public int EmployeeId { get; set; }
@@ -47,6 +48,7 @@ namespace WorkSheetMobile.Models
         public DateTime StartTime { get; set; }
         public DateTime StopTime { get; set; }
         public double CountedHours { get; set; }
+        public string Comments { get; set; }
 
         // Login fields
         public string UserName { get; set; }

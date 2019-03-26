@@ -25,7 +25,6 @@ namespace WorkSheetBackend.DataAccess
         public Nullable<bool> WorkComplete { get; set; }
         public Nullable<System.DateTime> CreatedAt { get; set; }
         public Nullable<System.DateTime> LastModifiedAt { get; set; }
-        public Nullable<System.DateTime> DeletedAt { get; set; }
         public Nullable<bool> Active { get; set; }
     
         public virtual Contractor Contractor { get; set; }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace WorkSheetMobile
 	public partial class TSList : ContentPage
 	{
         ListView lista = new ListView();
-        Button searchButton = new Button();
+        Button searchButton = new Button();       
         Picker EntityPicker = new Picker();
 		public TSList ()
 		{
@@ -25,6 +26,13 @@ namespace WorkSheetMobile
             searchButton.Text = "Search";
             searchButton.Clicked += SearchButton_Clicked;
 
+            var detailToolBarItem = new ToolbarItem()
+            {
+                Text = "Details"
+            };
+            ToolbarItems.Add(detailToolBarItem);
+            detailToolBarItem.Clicked += DetailToolBarItem_Clicked;
+
             EntityPicker.Title = "Choose";
 
             var page = new StackLayout();
@@ -33,7 +41,12 @@ namespace WorkSheetMobile
             page.Children.Add(searchButton);
             Content = page;          
 		}
-       
+
+        private async void DetailToolBarItem_Clicked(object sender, EventArgs e)
+        {
+            string chosen = lista.SelectedItem?.ToString();           
+            await PopupNavigation.PushAsync(new SheetDetailPopupView(chosen));
+        }
 
         private async void SearchButton_Clicked(object sender, EventArgs e)
         {

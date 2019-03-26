@@ -241,34 +241,34 @@
     <Compile Include="Controllers\TimesheetController.cs" />
     <Compile Include="Controllers\WorkController.cs" />
     <Compile Include="DataAccess\Contractor.cs">
-      <DependentUpon>WorksheetModel.tt</DependentUpon>
+      <DependentUpon>WorksheetDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\Customer.cs">
-      <DependentUpon>WorksheetModel.tt</DependentUpon>
+      <DependentUpon>WorksheetDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\Employee.cs">
-      <DependentUpon>WorksheetModel.tt</DependentUpon>
+      <DependentUpon>WorksheetDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\Timesheet.cs">
-      <DependentUpon>WorksheetModel.tt</DependentUpon>
+      <DependentUpon>WorksheetDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\WorkAssignment.cs">
-      <DependentUpon>WorksheetModel.tt</DependentUpon>
+      <DependentUpon>WorksheetDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataAccess\WorksheetModel.Context.cs">
+    <Compile Include="DataAccess\WorksheetDBModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WorksheetModel.Context.tt</DependentUpon>
+      <DependentUpon>WorksheetDBModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataAccess\WorksheetModel.cs">
+    <Compile Include="DataAccess\WorksheetDBModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WorksheetModel.tt</DependentUpon>
+      <DependentUpon>WorksheetDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataAccess\WorksheetModel.Designer.cs">
+    <Compile Include="DataAccess\WorksheetDBModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WorksheetModel.edmx</DependentUpon>
+      <DependentUpon>WorksheetDBModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -280,15 +280,15 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="DataAccess\WorksheetModel.Context.tt">
+    <Content Include="DataAccess\WorksheetDBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WorksheetModel.edmx</DependentUpon>
-      <LastGenOutput>WorksheetModel.Context.cs</LastGenOutput>
+      <DependentUpon>WorksheetDBModel.edmx</DependentUpon>
+      <LastGenOutput>WorksheetDBModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="DataAccess\WorksheetModel.tt">
+    <Content Include="DataAccess\WorksheetDBModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WorksheetModel.edmx</DependentUpon>
-      <LastGenOutput>WorksheetModel.cs</LastGenOutput>
+      <DependentUpon>WorksheetDBModel.edmx</DependentUpon>
+      <LastGenOutput>WorksheetDBModel.cs</LastGenOutput>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -299,12 +299,12 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="DataAccess\WorksheetModel.edmx">
+    <EntityDeploy Include="DataAccess\WorksheetDBModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>WorksheetModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>WorksheetDBModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="DataAccess\WorksheetModel.edmx.diagram">
-      <DependentUpon>WorksheetModel.edmx</DependentUpon>
+    <Content Include="DataAccess\WorksheetDBModel.edmx.diagram">
+      <DependentUpon>WorksheetDBModel.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\Worksheet - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />

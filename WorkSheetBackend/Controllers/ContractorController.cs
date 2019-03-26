@@ -49,7 +49,8 @@ namespace WorkSheetBackend.Controllers
                     ContractorPhoneNumber = contractor.PhoneNumber,
                     ContractorEmail = contractor.EmailAddress,
                     VatId = contractor.VatId,
-                    HourlyRate = contractor.HourlyRate.ToString()
+                    HourlyRate = contractor.HourlyRate.ToString(),
+                    
                 };
 
                 return chosenContractorModel;
@@ -90,13 +91,8 @@ namespace WorkSheetBackend.Controllers
                 // Modify chosen contractor
                 else if (model.ContOperation == "Modify")
                 {
-                    Contractor contractor = (from co in entities.Contractors where (co.Active == true) && (co.CompanyName == model.ContractorName) select co).FirstOrDefault();
-                    if (contractor == null)
-                    {
-                        return false;
-                    }
-                    int contractorId = contractor.Id_Contractor;
-                    Contractor existing = (from co in entities.Contractors where (co.Id_Contractor == contractorId) && (co.Active == true) select co).FirstOrDefault();
+                    
+                    Contractor existing = (from co in entities.Contractors where (co.Id_Contractor == model.ContractorId) && (co.Active == true) select co).FirstOrDefault();
                     if (existing != null)
                     {
                         existing.CompanyName = model.ContractorName;
@@ -118,13 +114,8 @@ namespace WorkSheetBackend.Controllers
                 // Delete chosen contractor
                 else if (model.ContOperation == "Delete")
                 {
-                    Contractor chosenContractor = (from cco in entities.Contractors where (cco.CompanyName == model.ContractorName) select cco).FirstOrDefault();
-                    if (chosenContractor == null)
-                    {
-                        return false;
-                    }
-                    int contractorId = chosenContractor.Id_Contractor;
-                    Contractor existing = (from e in entities.Contractors where (e.Id_Contractor == contractorId) select e).FirstOrDefault();
+                    
+                    Contractor existing = (from e in entities.Contractors where (e.Id_Contractor == model.ContractorId) select e).FirstOrDefault();
                     if (existing != null)
                     {
                         entities.Contractors.Remove(existing);
