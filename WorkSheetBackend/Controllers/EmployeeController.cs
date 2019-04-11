@@ -61,6 +61,7 @@ namespace WorkSheetBackend.Controllers
                     LastName = employee.LastName,
                     PhoneNumber = int.Parse(employee.PhoneNumber),
                     Email = employee.EmailAddress,
+                    Picture = employee.EmployeePicture
                 };
 
                 return chosenEmployeeModel;

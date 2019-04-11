@@ -195,7 +195,7 @@ namespace WorkSheetMobile
             await CrossMedia.Current.Initialize();
 
             var mediaOptions = new PickMediaOptions()
-            {
+            {               
                 PhotoSize = PhotoSize.MaxWidthHeight
             };
 
@@ -209,10 +209,12 @@ namespace WorkSheetMobile
                 throw new Exception("This stream is larger than the conversion algorithm can currently handle.");
             }
 
+            
             using (var br = new BinaryReader(s))
             {
-                image = br.ReadBytes((int)s.Length);
+                    image = br.ReadBytes((int)s.Length);
             }
+            
         }
     }
 }

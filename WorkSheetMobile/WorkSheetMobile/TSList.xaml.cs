@@ -44,8 +44,15 @@ namespace WorkSheetMobile
 
         private async void DetailToolBarItem_Clicked(object sender, EventArgs e)
         {
-            string chosen = lista.SelectedItem?.ToString();           
-            await PopupNavigation.PushAsync(new SheetDetailPopupView(chosen));
+            string chosen = lista.SelectedItem?.ToString();
+            if (chosen != null)
+            {
+                await PopupNavigation.PushAsync(new SheetDetailPopupView(chosen));
+            }
+            else
+            {
+                await DisplayAlert("Whoops", "Choose something first", "OK");
+            }
         }
 
         private async void SearchButton_Clicked(object sender, EventArgs e)

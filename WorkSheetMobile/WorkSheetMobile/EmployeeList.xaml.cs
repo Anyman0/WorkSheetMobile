@@ -58,40 +58,40 @@ namespace WorkSheetMobile
             };
             ToolbarItems.Add(DeleteEmployee);
             DeleteEmployee.Clicked += DeleteEmployee_Clicked;
-          
+            
 		}
 
         //Toolbaritem OnClicks
         private async void DeleteEmployee_Clicked(object sender, EventArgs e)
         {
             string chosen = employeeList.SelectedItem?.ToString();
-            string[] employee = chosen.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-            int empID = employee.Count();
-            string chosenEmployee = employee[empID - 2];
-
-            if (chosenEmployee == null)
+            
+            if (chosen == null)
             {
                 await DisplayAlert("Whoopsie", "Choose an employee first.", "OK");
             }
             else
             {
+                string[] employee = chosen.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                int empID = employee.Count();
+                string chosenEmployee = employee[empID - 2];
                 await PopupNavigation.PushAsync(new DeleteEmployeePopupView(chosenEmployee));
             }
         }
 
         private async void ModifyEmployee_Clicked(object sender, EventArgs e)
         {
-            string chosen = employeeList.SelectedItem?.ToString();           
-            string[] employee = chosen.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-            int empID = employee.Count();
-            string chosenEmployee = employee[empID - 2];          
+            string chosen = employeeList.SelectedItem?.ToString();                                
 
-            if (chosenEmployee == null)
+            if (chosen == null)
             {
                 await DisplayAlert("Whoopsie", "Choose an employee first.", "OK");
             }
             else
             {
+                string[] employee = chosen.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                int empID = employee.Count();
+                string chosenEmployee = employee[empID - 2];
                 await PopupNavigation.PushAsync(new ModifyEmployeePopupView(chosenEmployee));
             }
         }

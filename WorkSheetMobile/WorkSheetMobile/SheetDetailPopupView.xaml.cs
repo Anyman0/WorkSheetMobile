@@ -33,7 +33,7 @@ namespace WorkSheetMobile
             ContractorLabel.Text = sheetData.ContractorName;
             EmployeeLabel.Text = sheetData.FirstName;
             WorkLabel.Text = sheetData.WorkTitle;
-            TimeLabel.Text = sheetData.CountedHours.ToString();
+            TimeLabel.Text = " " + sheetData.CountedHours.ToString() + " hours.";
             CommentLabel.Text = sheetData.Comments;
         }
 	}

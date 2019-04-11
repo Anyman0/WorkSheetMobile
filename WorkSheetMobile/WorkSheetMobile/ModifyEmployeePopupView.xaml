@@ -26,7 +26,7 @@
 
         <Label Text="Modify Employee" FontAttributes="Bold" FontSize="Large" HorizontalOptions="Center"></Label>
         <Image x:Name="ProfilePicture"></Image>
-        <Button x:Name="GetPictureButton" Text="Get Photo" Clicked="GetPictureButton_Clicked"></Button>
+        <Image x:Name="EmployeePhoto" WidthRequest="150" HeightRequest="150" Aspect="Fill" ></Image>
         <Entry x:Name="FirstNameEntry"></Entry>
         <Entry x:Name="LastNameEntry"></Entry>
         <Entry x:Name="PhoneNumberEntry" Keyboard="Numeric"></Entry>

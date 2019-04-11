@@ -6,11 +6,11 @@
     <ContentPage.Resources>
         
     </ContentPage.Resources>
-       
-    <StackLayout>
+    <ScrollView>
+        <StackLayout>
         <Label x:Name="WelcomeUserLabel" FontAttributes="Bold" TextColor="Black" FontSize="Large" HorizontalOptions="Center"></Label>
-        <StackLayout Orientation="Horizontal">
-            <Image x:Name="ProfileImage"></Image>
+        <StackLayout Orientation="Horizontal" >
+                <Image x:Name="ProfileImage" WidthRequest="230" HeightRequest="200" Aspect="Fill"></Image>
             <Button x:Name="MyProfileButton" Text="My Profile"  Clicked="MyProfileButton_Clicked"></Button>
         </StackLayout>
         <Button x:Name="LogOutButton" Text="Logout" Clicked="LogOutButton_Clicked" ></Button>
@@ -21,7 +21,8 @@
             <Button x:Name="ToWorkassignmentsButton" Text="Workassignments" Clicked="ToWorkassignmentsButton_Clicked"></Button>
             <Button x:Name="ToTimesheetsButton" Text="Timesheets" Clicked="ToTimesheetsButton_Clicked"></Button>
         </StackLayout>
-        
-    </StackLayout>
+
+        </StackLayout>
+    </ScrollView>
 
 </ContentPage>

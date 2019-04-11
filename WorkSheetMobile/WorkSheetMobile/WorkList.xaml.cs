@@ -50,17 +50,15 @@ namespace WorkSheetMobile
         {
             string WorkID = workList.SelectedItem?.ToString();
 
-            string[] work = WorkID.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-            int works = work.Count();
-            string workid = work[works - 2];
-          
-
-            if (workid == null)
+            if (WorkID == null)
             {
                 await DisplayAlert("Whoopsie", "Choose a work first.", "OK");
             }
             else
             {
+                string[] work = WorkID.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                int works = work.Count();
+                string workid = work[works - 2];
                 await PopupNavigation.PushAsync(new DeleteWorkPopupView(workid));
             }
            
@@ -69,18 +67,17 @@ namespace WorkSheetMobile
         private async void ModifyWork_Clicked(object sender, EventArgs e)
         {
             string WorkID = workList.SelectedItem?.ToString();
-                       
-            string[] work = WorkID.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-            int works = work.Count();
-            string workid = work[works - 2];
-            
-            if (workid == null)
+                                            
+            if (WorkID == null)
             {
                 await DisplayAlert("Whoopsie", "Choose a work first.", "OK");
             }
 
             else
-            {                
+            {
+                string[] work = WorkID.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+                int works = work.Count();
+                string workid = work[works - 2];
                 await PopupNavigation.PushAsync(new ModifyWorkPopupView(workid));
             }           
             
